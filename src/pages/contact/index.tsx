@@ -1,84 +1,120 @@
-import Navbar from "../NavBar/index";// Importo Navbar nga rruga relative
-import Footer from "../../components/Footer/index"; // Importo Footer nga rruga relative
-import Head from "next/head";
+import { motion } from "framer-motion";
+import { useState } from "react";
 
-const ContactUs = () => {
+export default function Contact() {
+  const[formData, setFormData] = useState({
+    name:"",
+    email:"",
+    message:"",
+  });
+
+  const handleChange = (e: any) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    console.log("Form Data Submitted:", formData);
+    //U can add an API call here to submit the from data
+    setFormData({ name: "", email:"", message:"" }); //Clear the form after submission
+  };
+
   return (
-    <>
-      {/* Përdorim Head për të vendosur titullin dhe përshkrimin */}
-      <Head>
-        <title>Contact Us</title>
-        <meta name="description" content="Kontaktoni me ne." />
-      </Head>
+    <div className="pt-14">
+    <div className="flex flex-coll items-center justify-center min-h-screen bg-gray-100">
+      {/*Introduction Section*/}
+      <motion.section 
+            className="w-full py-20 bg-yellow-600 text-black text-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1 }}
+          >
+          <h1 className="text-5xl font-bold mb-4">Na kontaktoni</h1>
+          <p className="text-xl">
+            Jemi te gatshem t'ju ndihmojme! Plotesoni formularin me poshte per 
+            te na kontaktuar.
+          </p>
+        </motion.section>
 
-      {/* Shtoni Navbar */}
-      <Navbar />
+        {/*Contact Form Section*/}
+        <motion.section 
+            className="max-w-4xl w-full py-20 px-6"
+            initial={{ y: 100 }}
+            animate={{ y: 0 }}
+            transition={{ duration: 1 }}
+          >
+          <div className="bg-white p-8 rounded-xl shadow-md">
+          <h2 className="text-3xl font-bold text-yellow-600 mb-6 text-center">
+            Formulari i Kontaktit 
+          </h2>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label className="block text-gray-700">Emri juaj</label>
+              <input 
+                type="text" 
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                className="w-full mt-2 p-3 border rounded-xl"
+                placeholder="Shkruani emrin tuaj"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-gray-700">Email</label>
+              <input 
+                type="email" 
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full mt-2 p-3 border rounded-xl"
+                placeholder="Shkruani email-in tuaj"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-gray-700">Mesazhi</label>
+              <textarea 
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                className="w-full mt-2 p-3 border rounded-xl"
+                placeholder="Shkruani mesazhin tuaj"
+                required
+              />
+            </div>
+            <div className="text-center">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                type="submit"
+                className="mt-4 px-6 py-3 bg-yellow-600 text-black rounded-xl"
+              >
+                Dergo Mesazhin
+              </motion.button>
+            </div>
+          </form>
+        </div>
+      </motion.section>
 
-      <section style={styles.container}>
-        <h1 style={styles.title}>Contact Us</h1>
-        <p style={styles.description}>
-          Mirë se vini në aplikacionin tuaj Next.js! Na kontaktoni për çdo pyetje
-          ose informacion shtesë.
-        </p>
-        <form style={styles.form}>
-          <label>Email:</label>
-          <input type="email" placeholder="Email" style={styles.input} />
-          <label>Message:</label>
-          <textarea placeholder="Your message" style={styles.input}></textarea>
-          <button type="submit" style={styles.button}>Send</button>
-        </form>
-      </section>
-
-      {/* Shtoni Footer */}
-      <Footer />
-    </>
+      {/* Contact Information Section*/}
+      <motion.section 
+          className="w-full py-20 bg-yellow-600 text-black text-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+        >
+          <h2 className="text-4xl font-bold mb-6">
+            Mund te na kontaktoni edhe ne: 
+          </h2>
+          <p> Email: contact@mycompany.com</p>
+          <p> Tel: +383 123 456 789 </p>
+          <p> Adresa: Prishtinë, Kosovë</p>
+        </motion.section>
+    </div>
+  </div>
   );
-};
+}
 
-// **Stilizimi i komponentit**
-const styles = {
-  container: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: "40px",
-    maxWidth: "900px",
-    margin: "0 auto",
-  },
-  title: {
-    fontSize: "32px",
-    fontWeight: "bold",
-    marginBottom: "20px",
-  },
-  description: {
-    fontSize: "18px",
-    lineHeight: "1.6",
-    color: "#555",
-    marginBottom: "20px",
-  },
-  form: {
-    display: "flex",
-    flexDirection: "column",
-    width: "100%",
-    maxWidth: "500px",
-  },
-  input: {
-    padding: "10px",
-    marginBottom: "10px",
-    fontSize: "16px",
-    borderRadius: "8px",
-    border: "1px solid #ccc",
-  },
-  button: {
-    padding: "10px",
-    backgroundColor: "#007BFF",
-    color: "#fff",
-    fontSize: "16px",
-    border: "none",
-    borderRadius: "8px",
-    cursor: "pointer",
-  },
-};
-
-export default ContactUs;
+Contact.displayName = "Contact Us | My Application";
