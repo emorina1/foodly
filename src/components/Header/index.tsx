@@ -19,6 +19,10 @@ export function Header() {
           name: "Contact Us", 
           pathName: "/contact" 
         },
+        {
+            name:"Blogs",
+            pathName:"/blogs",
+        }
     ];
 
     return (
