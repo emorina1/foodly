@@ -6,7 +6,10 @@
     "paths": {
       "@/components/*": ["components/*"],
       "@/assets/*": ["assets/*"],
-      "@/src/*": ["src/*"]
+      "@/lib/*": ["lib/*"],
+      "@/api/*": ["api/*"],
+      "@/src/*": ["src/*"],
+      
     },
     "allowJs": true,
     "skipLibCheck": true,
