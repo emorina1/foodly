@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   env:{
     MONGODB_URI:
-    "mongodb+srv://elsamorina:RB3cVclRTGvMRkhu@foodly.zeg3wsc.mongodb.net "
+    "mongodb+srv://dev-api:HPGUJTcOJw04e1JM@myapplication.rfmaa0k.mongodb.net/myapp"
   }
 };
 
