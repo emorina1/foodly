@@ -22,6 +22,13 @@ export function Header() {
         {
             name:"Blogs",
             pathName:"/blogs",
+            
+       
+        },
+        {
+               name:"Recipes",
+            pathName:"/recipes",
+            
         }
     ];
 
