@@ -1,13 +1,21 @@
+// lib/mongodb.ts
 import { MongoClient } from "mongodb";
+
 declare global {
-    var _mongoClientPromise: Promise<MongoClient> | undefined;
+  var _mongoClientPromise: Promise<MongoClient> | undefined;
 }
 
-const uri = process.env.MONGODB_URI as string;
-const client = new MongoClient(uri);
+const uri = process.env.MONGODB_URI;
+if (!uri) {
+  throw new Error("Ju lutem vendosni MONGODB_URI në .env.local");
+}
+
+let client: MongoClient;
 let clientPromise: Promise<MongoClient>;
+
 if (!global._mongoClientPromise) {
-global._mongoClientPromise = client.connect();
+  client = new MongoClient(uri);
+  global._mongoClientPromise = client.connect();
 }
 clientPromise = global._mongoClientPromise;
 
