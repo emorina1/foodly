@@ -1,39 +1,14 @@
 import { CircularProgress } from "@mui/material";
-import useFetch from "hooks/useFetch";
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import Link from "next/link";
-import { Recipe } from "@/api/models/Recipe";
 import { useRouter } from "next/router";
-import recetaImage from "@/assets/images/i.png"; // Vetëm një foto
-
-export interface Post {
-  id: string;
-  title: string;
-  body: string;
-}
+import Link from "next/link";
+import { motion } from "framer-motion";
+import useFetch from "hooks/useFetch";
+import { Recipe } from "@/api/models/Recipe";
+import recetaImage from "@/assets/images/po.png";
 
 export default function Recipes() {
-  const { data: initialPosts, loading } = useFetch<Post[]>(
-    "https://jsonplaceholder.typicode.com/posts"
-  );
-
-  const [posts, setPosts] = useState<Post[] | null>(null);
-
-  useEffect(() => {
-    if (initialPosts) {
-      setPosts(initialPosts);
-    }
-  }, [initialPosts]);
-
-  const handleDelete = (id: string) => {
-    if (posts) {
-      setPosts(posts?.filter((post) => post.id !== id));
-    }
-  };
-
   const router = useRouter();
-  const { data: recipesData, loading: recipesLoading, remove } = useFetch<Recipe[]>("/api/recipes");
+  const { data: recipesData, loading, remove } = useFetch<Recipe[]>("/api/recipes");
 
   const handleDeleteRecipe = async (id: string) => {
     const confirmed = confirm("A jeni i sigurt që dëshironi ta fshini këtë recetë?");
@@ -50,88 +25,98 @@ export default function Recipes() {
   };
 
   return (
-
-  <div className="pt-12 bg-[#ffe6ea] min-h-screen">
-  {/* Hero Section - Static Image */}
-  <div
-    className="bg-cover bg-center h-[70vh] w-full flex items-center justify-start px-10"
-    style={{ backgroundImage: `url(${recetaImage.src})` }}
-  >
-<div className="flex justify-end" style={{ paddingTop: '20rem', paddingRight: '10rem' }}>
-  <button className="ml-4 në ml-6 ose ml-25 px-8 py-4 bg-[#f78da7] text-white text-lg rounded-xl font-semibold hover:bg-[#f57c9b] transition shadow-lg">
-    Get Started
-  </button>
+    <div className="pt-12 bg-[#ffe6ea] min-h-screen">
+      {/* Hero Section */}
+     <div
+  className="bg-cover bg-center h-[70vh] w-full flex flex-col items-start justify-center px-10"
+  style={{ backgroundImage: `url(${recetaImage.src})` }}
+>
+  <h1
+  className="text-6xl font-extrabold text-[#f8bbd0] font-serif drop-shadow-[2px_2px_6px_rgba(96,125,139,0.4)] tracking-wide"
+>
+  Scroll, choose,<br></br> and start baking magic.✨
+</h1>
+  <div className="flex justify-end" style={{ paddingTop: '10rem', paddingRight: '10rem' }}>
+    <button className="ml-6 px-8 py-4 bg-[#f78da7] text-white text-lg rounded-xl font-semibold hover:bg-[#f57c9b] transition shadow-lg">
+      Get Started
+    </button>
+  </div>
 </div>
 
 
+      {/* Recipes Section */}
+<div className="py-16 px-8 max-w-[120rem] mx-auto">
 
 
-  </div>
-
-
-
-
-
-      
-
-      {/* Recipes Grid */}
-      <div className="py-16 px-4">
-        <div className="flex justify-between items-center max-w-6xl mx-auto mb-10">
+        <div className="flex justify-between items-center mb-10">
           <h2 className="text-4xl font-bold text-[#4b2e2e] font-serif">
-            Popular Products
+            Popular Recipes
           </h2>
           <Link href="/recipes/all">
             <p className="text-[#a5556c] cursor-pointer hover:underline">See all</p>
           </Link>
         </div>
 
-        {recipesLoading ? (
+        {loading ? (
           <div className="flex justify-center items-center">
             <CircularProgress />
           </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 max-w-6xl mx-auto">
-            {recipesData && recipesData.length > 0 ? (
-              recipesData.map((recipe: Recipe) => (
-                <motion.div
-                  key={recipe._id}
-                  className="bg-white p-5 rounded-2xl shadow-md text-center hover:shadow-xl transition"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.4 }}
-                >
+        ) : recipesData && recipesData.length > 0 ? (
+       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
+
+
+
+            {recipesData.map((recipe) => (
+              <motion.div
+                key={recipe._id}
+                className="bg-white rounded-2xl overflow-hidden shadow-xl transition hover:shadow-2xl"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.4 }}
+              >
+                {recipe.image && (
                   <img
-                    src="https://via.placeholder.com/150"
+                    src={recipe.image}
                     alt={recipe.title}
-                    className="w-full h-40 object-cover rounded-xl mb-4"
+                    className="w-full h-48 object-cover"
                   />
-                  <h3 className="text-lg font-bold text-[#a5556c] mb-2">
+                )}
+
+                <div className="p-6 bg-[#f9f9f9]">
+                  <h3 className="text-xl font-bold text-[#4b2e2e] mb-4 font-serif">
                     {recipe.title}
                   </h3>
-                  <p className="text-gray-600 mb-3 line-clamp-2">
-                    {recipe.body}
-                  </p>
-                  <div className="flex justify-center gap-4">
+
+                  <div className="text-left space-y-2 text-sm text-gray-700">
+                    <p><span className="font-semibold text-[#a5556c]">Serving:</span> 1</p>
+                    <ul className="list-disc pl-5 space-y-1">
+                      {recipe.body?.split('\n').map((line, index) => (
+                        <li key={index}>{line}</li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="flex justify-between mt-6">
                     <Link href={`/update/recipes/${recipe._id}`}>
-                      <button className="px-4 py-2 bg-[#fbb6ce] text-white rounded-lg hover:bg-[#f78da7] transition">
+                      <button className="px-4 py-2 bg-[#fbb6ce] text-white rounded-lg hover:bg-[#f78da7] transition text-sm">
                         Përditëso
                       </button>
                     </Link>
                     <button
                       onClick={() => handleDeleteRecipe(recipe._id!)}
-                      className="px-4 py-2 bg-red-400 text-white rounded-lg hover:bg-red-500 transition"
+                      className="px-4 py-2 bg-red-400 text-white rounded-lg hover:bg-red-500 transition text-sm"
                     >
                       Fshij
                     </button>
                   </div>
-                </motion.div>
-              ))
-            ) : (
-              <p className="text-center text-lg text-gray-600 col-span-3">
-                Nuk ka receta në databazë.
-              </p>
-            )}
+                </div>
+              </motion.div>
+            ))}
           </div>
+        ) : (
+          <p className="text-center text-lg text-gray-600">
+            Nuk ka receta në databazë.
+          </p>
         )}
 
         <div className="text-center mt-12">
