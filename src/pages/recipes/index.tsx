@@ -1,246 +1,149 @@
-import { CircularProgress } from "@mui/material"; 
+import { CircularProgress } from "@mui/material";
 import useFetch from "hooks/useFetch";
-import { useState, useEffect } from "react"; 
-import { motion } from "framer-motion"; 
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { Recipe } from "@/api/models/Recipe";
 import { useRouter } from "next/router";
+import recetaImage from "@/assets/images/i.png"; // Vetëm një foto
 
 export interface Post {
-    id: string;
-    title: string;
-    body: string;
+  id: string;
+  title: string;
+  body: string;
 }
 
 export default function Recipes() {
-    const { data: initialPosts, loading } = useFetch<Post[]>(
-        "https://jsonplaceholder.typicode.com/posts"
-    );
+  const { data: initialPosts, loading } = useFetch<Post[]>(
+    "https://jsonplaceholder.typicode.com/posts"
+  );
 
-    const [posts, setPosts] = useState<Post[] | null>(null); 
+  const [posts, setPosts] = useState<Post[] | null>(null);
 
-    useEffect(() => {
-        if (initialPosts) {
-            setPosts(initialPosts);
-        }
-    }, [initialPosts]);
+  useEffect(() => {
+    if (initialPosts) {
+      setPosts(initialPosts);
+    }
+  }, [initialPosts]);
 
-    const handleDelete = (id: string) => {
-        if (posts) {
-            setPosts(posts?.filter((post) => post.id !== id));
-        }
-    };
+  const handleDelete = (id: string) => {
+    if (posts) {
+      setPosts(posts?.filter((post) => post.id !== id));
+    }
+  };
 
-    const router = useRouter();
-    const {
-        data: recipesData, 
-        loading: recipesLoading, 
-        remove
-    } = useFetch<Recipe[]>("/api/recipes");
+  const router = useRouter();
+  const { data: recipesData, loading: recipesLoading, remove } = useFetch<Recipe[]>("/api/recipes");
 
-    const handleDeleteRecipe = async(id: string) =>{
-        const confirmed = confirm(
-            "A jeni i sigurt që dëshironi ta fshini këtë recetë?"
-        );
-        if (!confirmed) return;
+  const handleDeleteRecipe = async (id: string) => {
+    const confirmed = confirm("A jeni i sigurt që dëshironi ta fshini këtë recetë?");
+    if (!confirmed) return;
 
-        try {
-            await remove(`/api/recipes/${id}`);
-            alert("Receta u fshi me sukses.");
-            router.reload();
-        } catch (error) {
-            alert("Gabim gjatë fshirjes së recetës.");
-            console.error(error);
-        }
-    };
+    try {
+      await remove(`/api/recipes/${id}`);
+      alert("Receta u fshi me sukses.");
+      router.reload();
+    } catch (error) {
+      alert("Gabim gjatë fshirjes së recetës.");
+      console.error(error);
+    }
+  };
 
-    return (
-        <div className="pt-12">
-            <div className="flex flex-col items-center justify-center min-h-screen gap-y-20">
+  return (
 
-                {/* Recipes Section: FROM OUR DATABASE */}
-                {recipesLoading ? (
-                    <CircularProgress />
-                ) : (
-                    <div className="bg-gray-200 w-full">
-                        <h1 className="text-4xl font-bold pt-20 pb-6 text-black text-center">
-                            Shfaqja e Recetave nga databaza jonë
-                        </h1>
-                        <div className="grid grid-cols-3">
-                            {recipesData && recipesData.length > 0 ? (
-                                recipesData.map((recipe: Recipe) => (
-                                    <motion.section
-                                        key={recipe._id}
-                                        className="max-w-6xl py-20 px-6 text-center"
-                                        initial={{ scale: 0.8 }}
-                                        animate={{ scale: 1 }}
-                                        transition={{ duration: 1 }}
-                                    >
-                                        <h2 className="text-4xl font-bold mb-6 text-yellow-600 line-clamp-2 uppercase">
-                                            {recipe.title}
-                                        </h2>
-                                        <p className="text-gray-700 mb-6">{recipe.body}</p>
-                                        <div className="mb-6">
-                                            <Link href={"/update/recipes/" + recipe._id}>
-                                                <button className="px-6 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-xl transition">
-                                                    Përditëso
-                                                </button>
-                                            </Link>    
-                                        </div>  
-                                        <button 
-                                            onClick={() => handleDeleteRecipe(recipe._id!)}
-                                            className="px-6 py-2 bg-red-600 text-white rounded-xl hover:bg-red-700 transition"
-                                        >
-                                            Fshij Recetën
-                                        </button>
-                                    </motion.section>
-                                ))
-                            ) : (
-                                <div className="col-span-3 py-20">
-                                    <p className="text-xl font-bold pb-10 text-black text-center">
-                                        Nuk ka receta në databazë
-                                    </p>
-                                </div>
-                            )}
-                        </div>
-                        <div className="text-center pb-10">
-                            <Link href={"/create/recipe"}>
-                                <button className="px-6 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-xl transition">
-                                    Krijo recetë
-                                </button>
-                            </Link>
-                        </div>
-                    </div>
-                )}
+  <div className="pt-12 bg-[#ffe6ea] min-h-screen">
+  {/* Hero Section - Static Image */}
+  <div
+    className="bg-cover bg-center h-[70vh] w-full flex items-center justify-start px-10"
+    style={{ backgroundImage: `url(${recetaImage.src})` }}
+  >
+<div className="flex justify-end" style={{ paddingTop: '20rem', paddingRight: '10rem' }}>
+  <button className="ml-4 në ml-6 ose ml-25 px-8 py-4 bg-[#f78da7] text-white text-lg rounded-xl font-semibold hover:bg-[#f57c9b] transition shadow-lg">
+    Get Started
+  </button>
+</div>
 
-                {/* Recipes Section: Static Site Generation (SSG) */}
-                {loading ? (
-                    <CircularProgress />  
-                ) : (
-                    <div className="bg-gray-200">
-                        <h1 className="text-4xl font-bold pt-20 pb-6 text-black text-center">
-                            Shfaqja e Recetës me Static Site Generation (SSG)
-                        </h1>
-                        <div className="">
-                            {posts && 
-                                posts
-                                    .slice(0,3)
-                                    .map((post: Post) => 
-                                    <motion.section
-                                        key={post.id}
-                                        className="max-w-6xl py-20 px-6 text-center"
-                                        initial={{ scale: 0.8}}
-                                        animate={{ scale: 1 }}
-                                        transition={{ duration: 1 }}
-                                    >
-                                        <h2 className="text-4xl font-bold mb-6 text-yellow-600 line-clamp-2 uppercase">
-                                            {post.title}
-                                        </h2>
-                                        <p className="text-gray-700 mb-6">{post.body}</p>
-                                        <div className="mb-6">
-                                            <Link href={"/recipes/ssg/" + post.id}>
-                                                <button className="px-6 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-xl transition">
-                                                    Shiko Detajet
-                                                </button>
-                                            </Link>
-                                        </div>
-                                        <button 
-                                            onClick={()=> handleDelete(post.id)}
-                                            className="px-6 py-2 bg-red-600 text-white rounded-xl hover:bg-red-700 transition"
-                                        >
-                                            Fshij Recetën
-                                        </button>
-                                    </motion.section>)}
-                        </div>
-                    </div>
-                )}
 
-                {/* Recipes Section: Server-Side Rendering (SSR) */}
-                {loading ? (
-                    <CircularProgress />  
-                ) : (
-                    <div className="bg-gray-200">
-                        <h1 className="text-4xl font-bold pt-20 pb-6 text-black text-center">
-                            Shfaqja e Recetës me Server-Side Rendering (SSR)
-                        </h1>
-                        <div className="">
-                            {posts && 
-                                posts
-                                    .slice(0,3)
-                                    .map((post: Post) => 
-                                    <motion.section
-                                        key={post.id}
-                                        className="max-w-6xl py-20 px-6 text-center"
-                                        initial={{ scale: 0.8}}
-                                        animate={{ scale: 1 }}
-                                        transition={{ duration: 1 }}
-                                    >
-                                        <h2 className="text-4xl font-bold mb-6 text-yellow-600 line-clamp-2 uppercase">
-                                            {post.title}
-                                        </h2>
-                                        <p className="text-gray-700 mb-6">{post.body}</p>
-                                        <div className="mb-6">
-                                            <Link href={"/recipes/ssr/" + post.id}>
-                                                <button className="px-6 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-xl transition">
-                                                    Shiko Detajet
-                                                </button>
-                                            </Link>
-                                        </div>
-                                        <button 
-                                            onClick={()=> handleDelete(post.id)}
-                                            className="px-6 py-2 bg-red-600 text-white rounded-xl hover:bg-red-700 transition"
-                                        >
-                                            Fshij Recetën
-                                        </button>
-                                    </motion.section>)}
-                        </div>
-                    </div>
-                )}
 
-                {/* Recipes Section: Incremental Static Regeneration (ISR) */}
-                {loading ? (
-                    <CircularProgress />  
-                ) : (
-                    <div className="bg-gray-200">
-                        <h1 className="text-4xl font-bold pt-20 pb-6 text-black text-center">
-                            Shfaqja e Recetës me Incremental Static Regeneration (ISR)
-                        </h1>
-                        <div className="">
-                            {posts && 
-                                posts
-                                    .slice(0,3)
-                                    .map((post: Post) => 
-                                    <motion.section
-                                        key={post.id}
-                                        className="max-w-6xl py-20 px-6 text-center"
-                                        initial={{ scale: 0.8}}
-                                        animate={{ scale: 1 }}
-                                        transition={{ duration: 1 }}
-                                    >
-                                        <h2 className="text-4xl font-bold mb-6 text-yellow-600 line-clamp-2 uppercase">
-                                            {post.title}
-                                        </h2>
-                                        <p className="text-gray-700 mb-6">{post.body}</p>
-                                        <div className="mb-6">
-                                            <Link href={"/recipes/isr/" + post.id}>
-                                                <button className="px-6 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-xl transition">
-                                                    Shiko Detajet
-                                                </button>
-                                            </Link>
-                                        </div>
-                                        <button 
-                                            onClick={()=> handleDelete(post.id)}
-                                            className="px-6 py-2 bg-red-600 text-white rounded-xl hover:bg-red-700 transition"
-                                        >
-                                            Fshij Recetën
-                                        </button>
-                                    </motion.section>)}
-                        </div>
-                    </div>
-                )}
-            </div>
+
+  </div>
+
+
+
+
+
+      
+
+      {/* Recipes Grid */}
+      <div className="py-16 px-4">
+        <div className="flex justify-between items-center max-w-6xl mx-auto mb-10">
+          <h2 className="text-4xl font-bold text-[#4b2e2e] font-serif">
+            Popular Products
+          </h2>
+          <Link href="/recipes/all">
+            <p className="text-[#a5556c] cursor-pointer hover:underline">See all</p>
+          </Link>
         </div>
-    );
+
+        {recipesLoading ? (
+          <div className="flex justify-center items-center">
+            <CircularProgress />
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 max-w-6xl mx-auto">
+            {recipesData && recipesData.length > 0 ? (
+              recipesData.map((recipe: Recipe) => (
+                <motion.div
+                  key={recipe._id}
+                  className="bg-white p-5 rounded-2xl shadow-md text-center hover:shadow-xl transition"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.4 }}
+                >
+                  <img
+                    src="https://via.placeholder.com/150"
+                    alt={recipe.title}
+                    className="w-full h-40 object-cover rounded-xl mb-4"
+                  />
+                  <h3 className="text-lg font-bold text-[#a5556c] mb-2">
+                    {recipe.title}
+                  </h3>
+                  <p className="text-gray-600 mb-3 line-clamp-2">
+                    {recipe.body}
+                  </p>
+                  <div className="flex justify-center gap-4">
+                    <Link href={`/update/recipes/${recipe._id}`}>
+                      <button className="px-4 py-2 bg-[#fbb6ce] text-white rounded-lg hover:bg-[#f78da7] transition">
+                        Përditëso
+                      </button>
+                    </Link>
+                    <button
+                      onClick={() => handleDeleteRecipe(recipe._id!)}
+                      className="px-4 py-2 bg-red-400 text-white rounded-lg hover:bg-red-500 transition"
+                    >
+                      Fshij
+                    </button>
+                  </div>
+                </motion.div>
+              ))
+            ) : (
+              <p className="text-center text-lg text-gray-600 col-span-3">
+                Nuk ka receta në databazë.
+              </p>
+            )}
+          </div>
+        )}
+
+        <div className="text-center mt-12">
+          <Link href="/create/recipe">
+            <button className="px-6 py-3 bg-[#f78da7] text-white rounded-lg font-medium hover:bg-[#f57c9b] transition">
+              Krijo Recetë
+            </button>
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 Recipes.displayName = "Recipes | My Application";
