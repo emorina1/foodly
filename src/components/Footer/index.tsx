@@ -1,22 +1,24 @@
 import Link from "next/link";
-import Logo from "@/assets/icons/logo.svg"; 
+import Image from "next/image";
+import Logo from "@/assets/icons/logo.png";
 
 export function Footer() {
   return (
-    <div className="border-t">
-      <div className="container m-auto py-7 flex items-center">
-        <Link href="/">
-          <picture>
-            <img className="h-10" src={Logo.src} alt="Logo" />
-          </picture>
+    <div className="bg-pink-50 border-t border-pink-200">
+      <div className="container mx-auto py-8 px-4 flex flex-col md:flex-row items-center justify-between text-center gap-4">
+        
+        {/* Logo */}
+        <Link href="/" className="hover:scale-105 transition-transform duration-300">
+          <Image src={Logo} alt="Logo" width={48} height={48} className="drop-shadow" />
         </Link>
-        <div className="flex-1 flex justify-center">
-          <p className="text-grey">All rights reserved - MyCompanyName.</p>
-        </div>
+
+        {/* Text */}
+        <p className="text-pink-600 font-medium">
+          © {new Date().getFullYear()} Cake Haven. All rights reserved.
+        </p>
       </div>
     </div>
   );
 }
-  
+
 export default Footer;
-  
