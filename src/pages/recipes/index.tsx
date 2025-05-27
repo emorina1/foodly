@@ -4,7 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import useFetch from "hooks/useFetch";
 import { Recipe } from "@/api/models/Recipe";
-import recetaImage from "@/assets/images/po.png";
+import recetaImage from "@/assets/images/po.jpg";
 
 export default function Recipes() {
   const router = useRouter();
@@ -32,12 +32,14 @@ export default function Recipes() {
   style={{ backgroundImage: `url(${recetaImage.src})` }}
 >
   <h1
-  className="text-6xl font-extrabold text-[#f8bbd0] font-serif drop-shadow-[2px_2px_6px_rgba(96,125,139,0.4)] tracking-wide"
+  className="text-6xl font-extrabold text-pink-300 font-serif drop-shadow-[2px_2px_3px_rgba(255,99,132,0.3)] tracking-wide"
+
 >
-  Scroll, choose,<br></br> and start baking magic.✨
+  Scroll, choose,<br></br> and start baking magic.
 </h1>
   <div className="flex justify-end" style={{ paddingTop: '10rem', paddingRight: '10rem' }}>
-    <button className="ml-6 px-8 py-4 bg-[#f78da7] text-white text-lg rounded-xl font-semibold hover:bg-[#f57c9b] transition shadow-lg">
+   <button className="ml-6 px-8 py-4 bg-[#f78da7] text-white text-lg rounded-xl font-semibold hover:bg-[#f57c9b] transition shadow-lg -mt-20">
+
       Get Started
     </button>
   </div>
