@@ -21,18 +21,17 @@ const itemVariants = {
 
 export default function Footer() {
   return (
-    <footer className="bg-pink-50 text-gray-700 mt-16 border border-red-500">
-
-<div className="relative overflow-hidden leading-[0] -mt-[1px]">
-  <svg
-    className="relative block w-full h-[80px]"
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 1200 120"
-    preserveAspectRatio="none"
-  >
-    <path d="M0,0 V0 Q600,120 1200,0 V0 Z" fill="#fce7ef" />
-  </svg>
-</div>
+    <footer>
+      <div className="relative overflow-hidden leading-[0] -mt-[1px]">
+        <svg
+          className="relative block w-full h-[80px]"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1200 120"
+          preserveAspectRatio="none"
+        >
+          <path d="M0,0 V0 Q600,120 1200,0 V0 Z" fill="#fce7ef" />
+        </svg>
+      </div>
 
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
@@ -46,11 +45,18 @@ export default function Footer() {
             viewport={{ once: true, amount: 0.4 }}
             variants={listVariants}
           >
-            {["Wishlist", "How To Order", "Our Story", "Privacy Policy", "Terms & Conditions"].map((text, idx) => (
-              <motion.li key={idx} variants={itemVariants} className="hover:text-pink-500 transition">
-                {text}
-              </motion.li>
-            ))}
+            <motion.li variants={itemVariants} className="hover:text-pink-500 transition">
+              <Link href="/blogs">Products</Link>
+            </motion.li>
+            <motion.li variants={itemVariants} className="hover:text-pink-500 transition">
+              <Link href="/about">Our Story</Link>
+            </motion.li>
+            <motion.li variants={itemVariants} className="hover:text-pink-500 transition">
+              <Link href="#">Privacy Policy</Link>
+            </motion.li>
+            <motion.li variants={itemVariants} className="hover:text-pink-500 transition">
+              <Link href="#">Terms & Conditions</Link>
+            </motion.li>
           </motion.ul>
         </div>
 
@@ -64,11 +70,18 @@ export default function Footer() {
             viewport={{ once: true, amount: 0.4 }}
             variants={listVariants}
           >
-            {["Contact", "Our Branches", "About", "Careers"].map((text, idx) => (
-              <motion.li key={idx} variants={itemVariants} className="hover:text-pink-500 transition">
-                {text}
-              </motion.li>
-            ))}
+            <motion.li variants={itemVariants} className="hover:text-pink-500 transition">
+              <Link href="/contact">Contact</Link>
+            </motion.li>
+            <motion.li variants={itemVariants} className="hover:text-pink-500 transition">
+              <Link href="/about">About</Link>
+            </motion.li>
+            <motion.li variants={itemVariants} className="hover:text-pink-500 transition">
+              <Link href="/recipes">Recipes</Link>
+            </motion.li>
+            <motion.li variants={itemVariants} className="hover:text-pink-500 transition">
+              <Link href="/login">Log In</Link>
+            </motion.li>
           </motion.ul>
         </div>
 
