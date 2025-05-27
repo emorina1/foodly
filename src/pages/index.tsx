@@ -1,202 +1,126 @@
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
-import CustomImage from "@/assets/images/image.jpg";
-import Button from "@/components/shared/Button";
-import Card from "@/components/shared/Card";
-import { Rocket, BarChart, ShieldCheck } from "lucide-react";
-import useFetch from "hooks/useFetch";
-import {useEffect, useState} from "react";
-import {CircularProgress} from "@mui/material";
+import cakee from "@/assets/images/cakee.jpg"; // ✅ Imported correctly
+import cake from "@/assets/images/cake.jpg";
+import cupcake from "@/assets/images/cupcake.jpg";
 
-export interface Post{
-  id: string;
-  title: string;
-  body: string; 
-}
+const listVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 10 },
+  visible: { opacity: 1, y: 0 },
+};
 
 export default function Home() {
-
-  const {data: initialPosts,loading} = useFetch<Post[]>(
-    "https://jsonplaceholder.typicode.com/posts"
-  );
-  const [posts, setPosts] = useState<Post[] | null>(null);
-  useEffect(() => {    
-    if(initialPosts){
-      setPosts(initialPosts);
-    }
-  },[initialPosts]);  
-
-  const handleDelete = (id: string) => {  
-    if(posts){
-      setPosts(posts.filter((post) => post.id !== id));
-    }
-  };
-  
   return (
-    <div className="pt-14">
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+    <div className="pt-14 bg-white text-gray-800 font-sans">
+      {/* Hero Section */}
+      <section className="relative w-full h-[90vh] flex items-center justify-center overflow-hidden">
+        {/* ✅ Optimized background image */}
+        <Image
+          src={cakee}
+          alt="Cakee background"
+          fill
+          className="object-cover z-0"
+          priority
+        />
+        {/* ✅ Overlay */}
+        <div className="absolute inset-0 bg-pink-950/40 z-10"></div>
 
-        {/* Hero Section */}
-        <motion.section 
-          className="w-full py-20 bg-yellow-600 text-black text-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-        >
-          <h1 className="text-5xl font-bold mb-4">
-            Mirë se Vini në Aplikacionin Tonë!
+        <div className="z-20 text-center text-white px-4">
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 drop-shadow-lg">
+            Cooking. Tasting. Living.
           </h1>
-          <p className="text-xl">
-            Ndërtoni aplikacione të fuqishme dhe të shpejta me Next.js
-          </p>
-        </motion.section>
+          <Link href="/blogs">
+            <button className="bg-white text-pink-600 font-semibold px-6 py-3 rounded-full shadow-md hover:bg-pink-100 transition">
+              Check Our Products
+            </button>
+          </Link>
+        </div>
+      </section>
 
-        {/* About Section */}
-        <motion.section 
-          className="max-w-6xl py-30 px-6 text-center"
-          initial={{ x: -100 }}
-          animate={{ x: 0 }}
-          transition={{ duration: 1 }}
-        >
-          <h2 className="text-4xl font-bold mb-6 text-yellow-600">
-            Rreth Nesh
-          </h2>
-          <p className="text-gray-700 mb-6">
-            Ne krijojmë aplikacione të avancuara duke përdorur teknologjitë më të fundit.
-            Fokusimi ynë kryesor është të ofrojmë produkte të optimizuara dhe SEO-friendly.
-          </p>
-          <Image 
-            src={CustomImage}
-            alt="Imazh Rreth Nesh"
-            width={500}
-            height={300}
-            className="rounded-xl"
-          />
-        </motion.section>
+      {/* Services Intro */}
+      <motion.section
+        className="text-center py-20 px-4"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true, amount: 0.3 }}
+      >
+        <h2 className="text-4xl font-extrabold text-pink-600 mb-6">Our Service</h2>
+      </motion.section>
 
-        {/* Features Section */}
-        <motion.section 
-          className="w-full py-20 bg-gray-200 text-center"
-          initial={{ y: 100 }}
-          animate={{ y: 0 }}
-          transition={{ duration: 1 }}
-        >
-          <div className="container mx-auto px-6">
-            <h2 className="text-4xl font-bold mb-10 text-yellow-600">
-              Karakteristikat kryesore
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {/* Service 1 - Cake */}
+<motion.section
+  className="flex flex-col md:flex-row items-center justify-between px-16 py-12 bg-pink-50"
+  initial={{ opacity: 0, y: 50 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.8 }}
+  viewport={{ once: true, amount: 0.3 }}
+>
+  <div className="md:w-1/2 flex justify-center">
+    <Image
+      src={cake}
+      alt="Cake"
+      width={400}
+      height={400}
+      className="rounded-3xl shadow-xl"
+    />
+  </div>
+  <div className="md:w-1/2 mt-8 md:mt-0 md:pl-10">
+    <h3 className="text-3xl font-bold text-gray-800 mb-4">Cake</h3>
+    <p className="text-gray-600 mb-6 leading-relaxed">
+      Discover the art of cake-making with our stunning and delicious creations.
+      <br />
+      Each cake is a masterpiece of flavor and design.
+    </p>
+    <button className="bg-pink-500 text-white font-medium px-6 py-2 rounded-full hover:bg-pink-600 transition">
+      Shop Now
+    </button>
+  </div>
+</motion.section>
+{/* Service 2 - Cupcakes */}
+<motion.section
+  className="flex flex-col md:flex-row-reverse items-center justify-between px-10 md:px-16 py-12 bg-white"
+  initial={{ opacity: 0, y: 50 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.8 }}
+  viewport={{ once: true, amount: 0.3 }}
+>
+  <div className="md:w-1/2 flex justify-center">
+    <Image
+      src={cupcake}
+      alt="Cupcakes"
+      width={400}
+      height={400}
+      className="rounded-3xl shadow-xl"
+    />
+  </div>
+  <div className="md:w-1/2 mt-8 md:mt-0 md:pr-4 md:pl-0 text-right">
+    <h3 className="text-3xl font-bold text-gray-800 mb-4">Cupcakes</h3>
+    <p className="text-gray-600 mb-6 leading-relaxed">
+      Indulge in the irresistible charm of our freshly baked cupcakes,
+      <br />
+      crafted with love and the finest ingredients.
+      <br />
+      Each bite delivers a perfect balance of flavor and joy.
+    </p>
+    <button className="bg-pink-500 text-white font-medium px-6 py-2 rounded-full hover:bg-pink-600 transition">
+      Shop Now
+    </button>
+  </div>
+</motion.section>
 
-              {/* Feature 1 */}
-              <motion.div 
-                whileHover={{ scale: 1.05, y: -5 }}
-                transition={{ type: "spring", stiffness: 300 }}
-                className="p-6 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition duration-300"
-              >
-                <h3 className="text-2xl font-semibold text-black mb-2">
-                  Shpejtësi & Performance
-                </h3>
-                <p className="text-gray-700 mb-4">
-                  Aplikacionet tona janë të optimizuara për performancë maksimale dhe ngarkim të shpejtë.
-                </p>
-                <button className="bg-yellow-600 text-black font-medium px-4 py-2 rounded-full hover:bg-yellow-700 transition">
-                  Mëso më shumë
-                </button>
-              </motion.div>
 
-              {/* Feature 2 */}
-              <motion.div 
-                whileHover={{ scale: 1.05, y: -5 }}
-                transition={{ type: "spring", stiffness: 300 }}
-                className="p-6 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition duration-300"
-              >
-                <h3 className="text-2xl font-semibold text-black mb-2">
-                  SEO e Avancuar
-                </h3>
-                <p className="text-gray-700 mb-4">
-                  Ne e strukturojmë përmbajtjen në mënyrë që të jetë e lehtë për motorët e kërkimit të indeksojnë.
-                </p>
-                <button className="bg-yellow-600 text-black font-medium px-4 py-2 rounded-full hover:bg-yellow-700 transition">
-                  Mëso më shumë
-                </button>
-              </motion.div>
 
-              {/* Feature 3 */}
-              <motion.div 
-                whileHover={{ scale: 1.05, y: -5 }}
-                transition={{ type: "spring", stiffness: 300 }}
-                className="p-6 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition duration-300"
-              >
-                <h3 className="text-2xl font-semibold text-black mb-2">
-                  Renderim Dinamik & Statik
-                </h3>
-                <p className="text-gray-700 mb-4">
-                  Mbështesim të dyja metodat e renderimit për fleksibilitet maksimal në ndërtimin e aplikacioneve.
-                </p>
-                <button className="bg-yellow-600 text-black font-medium px-4 py-2 rounded-full hover:bg-yellow-700 transition">
-                  Mëso më shumë
-                </button>
-              </motion.div>
-
-            </div>
-          </div>
-        </motion.section>
-
-        {/* Services Section */}
-        <motion.section 
-          className="max-w-6xl py-30 px-6 text-center"
-          initial={{ scale: 0.8 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 1 }}
-        >
-          <h2 className="text-4xl font-bold mb-6 text-yellow-600">
-            Shërbimet Tona
-          </h2>
-          <p className="text-gray-700 mb-6">
-            Ofrojmë një gamë të gjerë shërbimesh duke përfshirë zhvillimin e aplikacioneve web, 
-            optimizimin për SEO dhe integrimin me API të jashtme.
-          </p>
-        </motion.section>
-         {/* Blog Section */}
-    <div className="grid grid-cols-3 py-20 bg-gray-200">
-      {loading ? (
-        <CircularProgress />
-      ) : (
-        posts &&
-        posts?.map((post) => (
-          <motion.section
-            key={post.id}
-            className="max-w-6xl py-20 px-6 text-center"
-            initial={{ scale: 0.8 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 1 }}
-          >
-            <h2 className="text-4xl font-bold mb-6 text-yellow-600 line-clamp-2 uppercase">
-              {post.title}
-            </h2>
-            <p className="text-gray-700 mb-6">{post.body}</p>
-            <button onClick={() => handleDelete(post.id)} className= "px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-2xl shadow-md transition duration-300 ease-in-out">Fshij Postin</button>
-            
-          </motion.section>
-        ))
-      )}
-    </div>
-
-        {/* Contact Section */}
-        <motion.section 
-          className="w-full py-20 bg-yellow-600 text-black text-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-        >
-          <h2 className="text-4xl font-bold mb-6">Kontaktoni me Ne</h2>
-          <p>Email: contact@mycompany.com</p>
-          <p>Tel: +383 123 456 789</p>
-          <p>Adresa: Prishtinë, Kosovë</p>
-        </motion.section>
-      </div>
     </div>
   );
 }
-
-Home.displayName = "My Application";
