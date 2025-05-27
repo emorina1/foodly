@@ -25,15 +25,17 @@ export default function CreateRecipe() {
   };
 
   return (
-    <div className="pt-12 max-w-xl mx-auto">
-      <h2 className="text-2xl font-semibold mb-6">Shto recetën e re</h2>
+    <div className="pt-16 max-w-3xl mx-auto bg-pink-50 rounded-xl shadow-lg p-12">
+      <h2 className="text-4xl font-extrabold mb-8 text-pink-700 text-center tracking-wide">
+        Shto recetën e re
+      </h2>
 
       <input
         type="text"
         placeholder="Titulli"
         value={newRecipe.title}
         onChange={(e) => setNewRecipe({ ...newRecipe, title: e.target.value })}
-        className="w-full mb-4 px-4 py-2 border rounded"
+        className="w-full mb-6 px-6 py-4 border-4 border-pink-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-pink-400 placeholder-pink-400 text-lg font-semibold transition"
       />
 
       <input
@@ -63,24 +65,28 @@ export default function CreateRecipe() {
               alert("Gabim gjatë ngarkimit të fotos.");
             });
         }}
-        className="w-full mb-4"
+        className="w-full mb-6"
       />
 
       {newRecipe.image && (
-        <img src={newRecipe.image} alt="Preview" className="mb-4 w-full h-48 object-cover rounded" />
+        <img
+          src={newRecipe.image}
+          alt="Preview"
+          className="mb-6 w-full h-64 object-cover rounded-xl border-4 border-pink-200 shadow-lg"
+        />
       )}
 
       <textarea
         placeholder="Përmbajtja"
         value={newRecipe.body}
         onChange={(e) => setNewRecipe({ ...newRecipe, body: e.target.value })}
-        className="w-full mb-4 px-4 py-2 border rounded"
-        rows={6}
+        className="w-full mb-8 px-6 py-4 border-4 border-pink-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-pink-400 placeholder-pink-400 text-lg font-semibold transition resize-none"
+        rows={8}
       />
 
       <button
         onClick={handleCreate}
-        className="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+        className="w-full py-4 bg-pink-600 text-white rounded-xl hover:bg-pink-700 transition text-xl font-bold shadow-md shadow-pink-400/60"
       >
         Krijo Recetën
       </button>

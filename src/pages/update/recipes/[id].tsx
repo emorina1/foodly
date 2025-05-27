@@ -18,7 +18,6 @@ export default function UpdateRecipe() {
     error,
   } = useFetch<Recipe>(id ? `/api/recipes/${id}` : "");
 
-  // Mbush formën me të dhënat ekzistuese
   useEffect(() => {
     if (existingRecipe) {
       setNewRecipe({
@@ -43,7 +42,12 @@ export default function UpdateRecipe() {
     }
   };
 
-  if (!id || loading) return <p className="text-center mt-10">Loading...</p>;
+  if (!id || loading)
+    return (
+      <p className="text-center mt-10 text-pink-600 font-semibold text-xl animate-pulse">
+        Loading...
+      </p>
+    );
 
   return (
     <>
@@ -51,44 +55,40 @@ export default function UpdateRecipe() {
         <title>Update Recipe | My Application</title>
       </Head>
 
-      <div className="pt-12">
-        <div className="flex flex-col items-center justify-center min-h-screen gap-y-20">
-          <div className="mb-10 max-w-2xl mx-auto bg-white p-6 rounded-xl shadow-md">
-            <h2 className="text-black text-2xl font-semibold mb-4">
-              Përditëso Recetën
-            </h2>
+      <div className="pt-24 bg-gradient-to-br from-pink-50 via-pink-100 to-pink-200 min-h-screen flex items-center justify-center px-6">
+        <div className="max-w-3xl w-full bg-white rounded-3xl shadow-2xl p-12">
+          <h2 className="text-pink-700 text-4xl font-extrabold mb-8 text-center tracking-wide drop-shadow-md">
+            Përditëso Recetën
+          </h2>
 
-            <input
-              type="text"
-              placeholder="Titulli"
-              value={newRecipe.title}
-              onChange={(e) =>
-                setNewRecipe({ ...newRecipe, title: e.target.value })
-              }
-              className="w-full px-4 py-2 mb-4 border rounded placeholder-gray-400 text-black"
-            />
+          <input
+            type="text"
+            placeholder="Titulli"
+            value={newRecipe.title}
+            onChange={(e) => setNewRecipe({ ...newRecipe, title: e.target.value })}
+            className="w-full mb-8 px-8 py-5 border-4 border-pink-300 rounded-2xl focus:outline-none focus:ring-6 focus:ring-pink-400 placeholder-pink-400 text-pink-700 font-semibold text-2xl shadow-inner transition duration-300"
+          />
 
-            <textarea
-              placeholder="Përmbajtja"
-              value={newRecipe.body}
-              onChange={(e) =>
-                setNewRecipe({ ...newRecipe, body: e.target.value })
-              }
-              className="w-full px-4 py-2 mb-4 border rounded placeholder-gray-400 text-black"
-            />
+          <textarea
+            placeholder="Përmbajtja"
+            value={newRecipe.body}
+            onChange={(e) => setNewRecipe({ ...newRecipe, body: e.target.value })}
+            className="w-full mb-10 px-8 py-6 border-4 border-pink-300 rounded-2xl focus:outline-none focus:ring-6 focus:ring-pink-400 placeholder-pink-400 text-pink-700 font-semibold text-2xl shadow-inner resize-none transition duration-300"
+            rows={10}
+          />
 
-            <button
-              onClick={handleUpdate}
-              disabled={isUpdating}
-              className={`px-6 py-2 rounded-xl text-white transition ${
-                isUpdating
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-green-600 hover:bg-green-700"
-              }`}
-            >
-              {isUpdating ? "Duke u përditësuar..." : "Përditëso Recetën"}
-            </button>
-          </div>
+          <button
+            onClick={handleUpdate}
+            disabled={isUpdating}
+            className={`w-full py-6 rounded-3xl text-white text-3xl font-extrabold shadow-lg shadow-pink-500/70 transition duration-300 ${
+              isUpdating
+                ? "bg-pink-300 cursor-not-allowed"
+                : "bg-pink-600 hover:bg-pink-700 active:bg-pink-800"
+            }`}
+            aria-label="Përditëso Recetën"
+          >
+            {isUpdating ? "Duke u përditësuar..." : "Përditëso Recetën"}
+          </button>
         </div>
       </div>
     </>
