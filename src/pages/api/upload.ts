@@ -1,3 +1,4 @@
+// pages/api/upload.ts
 import type { NextApiRequest, NextApiResponse } from "next";
 import formidable from "formidable";
 import fs from "fs";
@@ -5,7 +6,7 @@ import path from "path";
 
 export const config = {
   api: {
-    bodyParser: false, // ky duhet për formidable të punojë
+    bodyParser: false,
   },
 };
 
