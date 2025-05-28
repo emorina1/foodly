@@ -102,7 +102,7 @@ export default function Footer() {
             <Image src={Logo} alt="Logo" width={40} height={40} className="h-10 w-auto" />
           </Link>
           <p className="text-sm text-gray-600 text-center md:text-left">
-            © {new Date().getFullYear()} Cake Haven. All rights reserved.
+            © {new Date().getFullYear()} Cake Shop. All rights reserved.
           </p>
         </div>
       </div>

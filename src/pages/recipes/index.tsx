@@ -11,15 +11,15 @@ export default function Recipes() {
   const { data: recipesData, loading, remove } = useFetch<Recipe[]>("/api/recipes");
 
   const handleDeleteRecipe = async (id: string) => {
-    const confirmed = confirm("A jeni i sigurt që dëshironi ta fshini këtë recetë?");
+    const confirmed = confirm("Are u sure u want to delete this recipe?");
     if (!confirmed) return;
 
     try {
       await remove(`/api/recipes/${id}`);
-      alert("Receta u fshi me sukses.");
+      alert("Recipe deleted successfully.");
       router.reload();
     } catch (error) {
-      alert("Gabim gjatë fshirjes së recetës.");
+      alert("Error while deleting recipe.");
       console.error(error);
     }
   };
@@ -66,8 +66,6 @@ export default function Recipes() {
         ) : recipesData && recipesData.length > 0 ? (
        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
 
-
-
             {recipesData.map((recipe) => (
               <motion.div
                 key={recipe._id}
@@ -101,14 +99,14 @@ export default function Recipes() {
                   <div className="flex justify-between mt-6">
                     <Link href={`/update/recipes/${recipe._id}`}>
                       <button className="px-4 py-2 bg-[#fbb6ce] text-white rounded-lg hover:bg-[#f78da7] transition text-sm">
-                        Përditëso
+                        Update
                       </button>
                     </Link>
                     <button
                       onClick={() => handleDeleteRecipe(recipe._id!)}
                       className="px-4 py-2 bg-red-400 text-white rounded-lg hover:bg-red-500 transition text-sm"
                     >
-                      Fshij
+                      Delete
                     </button>
                   </div>
                 </div>
@@ -117,14 +115,14 @@ export default function Recipes() {
           </div>
         ) : (
           <p className="text-center text-lg text-gray-600">
-            Nuk ka receta në databazë.
+            There are no recipes in the database
           </p>
         )}
 
         <div className="text-center mt-12">
           <Link href="/create/recipe">
             <button className="px-6 py-3 bg-[#f78da7] text-white rounded-lg font-medium hover:bg-[#f57c9b] transition">
-              Krijo Recetë
+              Create a Recipe
             </button>
           </Link>
         </div>

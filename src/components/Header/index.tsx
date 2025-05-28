@@ -11,7 +11,7 @@ export function Header() {
         { name: "Home", pathName: "/" },
         { name: "About", pathName: "/about" },
         { name: "Contact Us", pathName: "/contact" },
-        { name: "Blogs", pathName: "/blogs" },
+        { name: "Products", pathName: "/products" },
         { name: "Recipes", pathName: "/recipes" }
     ];
 

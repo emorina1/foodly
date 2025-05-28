@@ -10,7 +10,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     return { props: { post } };
 };
 
-export default function Blog({ post }: any) {
+export default function Product({ post }: any) {
     return(
         <div className="pt-12 px-20 flex flex-col items-center justify-center min-h-screen gap-y-20">
             <h1 className="text-4xl font-bold pt-20 pb-6 text-black text-center">
@@ -27,4 +27,4 @@ export default function Blog({ post }: any) {
     );
 }
 
-Blog.displayName = "Blog | My Application";
+Product.displayName = "Product | My Application";
