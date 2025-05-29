@@ -31,6 +31,7 @@ function useFetch<T>(url: string) {
             });
             const result = await res.json();
             setData(result);
+            return result;
         } catch (err: any) {
             setError(err.message || "POST failed");
         } finally {

@@ -2,7 +2,7 @@ import "../styles/globals.css"; // fixed relative path
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import { MainLayout } from "../components/MainLayout"; // adjust if needed
-
+import {SessionProvider} from "next-auth/react";
 export default function App({ Component, pageProps }: AppProps) {
   const title = pageProps.title || "Cake Shop";
   const description = pageProps.description || "My Platform Description";
@@ -29,10 +29,12 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta name="twitter:image" content={image} />
         <meta name="twitter:url" content={url} />
       </Head>
+      <SessionProvider>
 
       <MainLayout name={Component.displayName || title}>
         <Component {...pageProps} />
       </MainLayout>
+      </SessionProvider>
     </>
   );
 }
