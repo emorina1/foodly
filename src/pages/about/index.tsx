@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import Head from "next/head";
 
 import CakeImage from "@/assets/images/pink.png";
 import BgTexture from "@/assets/images/dredhza.png";
@@ -17,6 +18,9 @@ export default function AboutUs() {
   return (
     <section className="relative bg-pink-50 overflow-hidden">
       {/* Background texture */}
+      <Head>
+        <title>About | Cake Shop</title>
+      </Head>
       <div className="absolute inset-0 -z-10">
         <Image
           src={BgTexture}

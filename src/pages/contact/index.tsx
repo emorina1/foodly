@@ -23,8 +23,8 @@ export default function ContactPage() {
 
       if (res.ok) {
         toast("Message sent successfully!", {
-  className: "bg-pink-600 text-white font-semibold rounded-lg shadow-lg",
-});
+         className: "bg-pink-600 text-white font-semibold rounded-lg shadow-lg",
+        });
 
         setName("");
         setEmail("");

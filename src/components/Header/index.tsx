@@ -12,6 +12,7 @@ export function Header() {
         { name: "About", pathName: "/about" },
         { name: "Contact Us", pathName: "/contact" },
         { name: "Products", pathName: "/products" },
+        { name: "Events", pathName: "/events" },      // ✅ Added here
         { name: "Recipes", pathName: "/recipes" }
     ];
 

@@ -1,10 +1,11 @@
 import { CircularProgress } from "@mui/material";
 import useFetch from "hooks/useFetch";
-import { useState, useEffect } from "react"; 
-import { motion } from "framer-motion"; 
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { Product } from "@/api/models/Product";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 export interface Post {
   id: string;
@@ -24,17 +25,11 @@ export default function Products() {
     }
   }, [initialPosts]);
 
-  const handleDelete = (id: string) => {
-    if (posts) {
-      setPosts(posts.filter((post) => post.id !== id));
-    }
-  };
-
   const router = useRouter();
   const {
     data: productsData,
     loading: productsLoading,
-    remove
+    remove,
   } = useFetch<Product[]>("/api/products");
 
   const handleDeleteProduct = async (id: string) => {
@@ -53,9 +48,11 @@ export default function Products() {
 
   return (
     <div className="pt-12">
-      <div className="flex flex-col items-center justify-center min-h-screen gap-y-20">
+      <Head>
+        <title>Products | Cake Shop </title>
+      </Head>
 
-        {/* Styled Product Cards */}
+      <div className="flex flex-col items-center justify-center min-h-screen gap-y-20">
         {productsLoading ? (
           <CircularProgress />
         ) : (
@@ -85,18 +82,20 @@ export default function Products() {
                         <span className="text-4xl">🍰</span>
                       )}
                     </div>
-                    <h2 className="text-2xl font-bold text-pink-700 mb-2 uppercase">{product.title}</h2>
+                    <h2 className="text-2xl font-bold text-pink-700 mb-2 uppercase">
+                      {product.title}
+                    </h2>
                     <p className="text-gray-500 mb-4">{product.body}</p>
                     <p className="text-pink-800 font-bold mb-4">~ 90€ / Box</p>
                     <div className="flex justify-center gap-4">
                       <Link href={`/update/product/${product._id}`}>
-                        <button className="bg-yellow-500 hover:bg-yellow-600 text-white rounded-full px-4 py-2">
+                        <button className="bg-[#E6007E] hover:bg-pink-800 text-white rounded-full px-5 py-2 font-semibold transition">
                           Update
                         </button>
                       </Link>
                       <button
                         onClick={() => handleDeleteProduct(product._id!)}
-                        className="bg-red-500 hover:bg-red-600 text-white rounded-full px-4 py-2"
+                        className="bg-[#E6007E] hover:bg-pink-800 text-white rounded-full px-5 py-2 font-semibold transition"
                       >
                         Delete
                       </button>
@@ -111,7 +110,7 @@ export default function Products() {
             </div>
 
             <div className="text-center mt-16">
-              <Link href={"/create/product"}>
+              <Link href="/create/product">
                 <button className="bg-pink-600 hover:bg-pink-700 text-white font-semibold px-8 py-3 rounded-full shadow-md transition">
                   Create Product
                 </button>
@@ -119,45 +118,7 @@ export default function Products() {
             </div>
           </div>
         )}
-
-        {/* SSG Section (kept as-is) */}
-        {!loading && posts && (
-          <div className="bg-gray-200">
-            <h1 className="text-4xl font-bold pt-20 pb-6 text-black text-center">
-              Product Display with Static Site Generation (SSG)
-            </h1>
-            {posts.slice(0, 3).map((post: Post) => (
-              <motion.section
-                key={post.id}
-                className="max-w-6xl py-20 px-6 text-center"
-                initial={{ scale: 0.8 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 1 }}
-              >
-                <h2 className="text-4xl font-bold mb-6 text-yellow-600 line-clamp-2 uppercase">
-                  {post.title}
-                </h2>
-                <p className="text-gray-700 mb-6">{post.body}</p>
-                <div className="mb-6">
-                  <Link href={`/products/ssg/${post.id}`}>
-                    <button className="px-6 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-xl transition">
-                      View Details
-                    </button>
-                  </Link>
-                </div>
-                <button
-                  onClick={() => handleDelete(post.id)}
-                  className="px-6 py-2 bg-red-600 text-white rounded-xl hover:bg-red-700 transition"
-                >
-                  Delete Post
-                </button>
-              </motion.section>
-            ))}
-          </div>
-        )}
       </div>
     </div>
   );
 }
-
-Products.displayName = "Products | My Application";
