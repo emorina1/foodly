@@ -1,21 +1,24 @@
 import { getCsrfToken, signIn } from "next-auth/react";
-import router from "next/router";
 import { useState } from "react";
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 export default function SignIn({ csrfToken }: { csrfToken: string }) {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
-    setError("");
     e.preventDefault();
+    setError("");
+
     const res = await signIn("credentials", {
       redirect: false,
       email,
       password,
     });
+
     if (res?.error) {
       setError(res.error);
     } else if (res?.url) {
@@ -44,6 +47,7 @@ export default function SignIn({ csrfToken }: { csrfToken: string }) {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-4 py-2 mb-4 border rounded placeholder-gray-400 text-black"
+                required
               />
               <input
                 type="password"
@@ -51,6 +55,7 @@ export default function SignIn({ csrfToken }: { csrfToken: string }) {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-4 py-2 mb-4 border rounded placeholder-gray-400 text-black"
+                required
               />
               <button
                 type="submit"
