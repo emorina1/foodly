@@ -28,7 +28,7 @@ export default function SignIn({ csrfToken }: { csrfToken: string }) {
       if (role === "admin") {
         router.push("/dashboard/admin");
       } else {
-        router.push("/dashboard/user");
+        router.push("/");
       }
     }
   };
@@ -38,40 +38,41 @@ export default function SignIn({ csrfToken }: { csrfToken: string }) {
       <Head>
         <title>Sign In | My Application</title>
       </Head>
-      <div className="pt-12">
-        <div className="flex flex-col items-center justify-center min-h-screen gap-y-20">
-          <div className="mb-10 max-w-2xl mx-auto bg-white p-6 rounded-xl shadow-md">
-            <h2 className="text-black text-2xl font-semibold mb-4">Kyçu</h2>
-            {error && (
-              <div className="bg-red-100 text-red-700 p-2 mb-4 rounded">
-                {error}
-              </div>
-            )}
-            <form onSubmit={handleSubmit}>
-              <input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-2 mb-4 border rounded placeholder-gray-400 text-black"
-                required
-              />
-              <input
-                type="password"
-                placeholder="Fjalëkalimi"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-2 mb-4 border rounded placeholder-gray-400 text-black"
-                required
-              />
-              <button
-                type="submit"
-                className="px-6 py-2 bg-green-600 text-white rounded-xl hover:bg-green-700 transition"
-              >
-                Kyçu
-              </button>
-            </form>
-          </div>
+
+      <div className="min-h-screen flex items-center justify-center bg-pink-50 pt-24 px-4">
+        <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg border border-pink-200">
+          <h2 className="text-3xl font-bold text-pink-600 mb-6 text-center">Welcome Back</h2>
+
+          {error && (
+            <div className="bg-red-100 text-red-700 p-3 mb-4 rounded-lg text-sm text-center">
+              {error}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-4 py-3 border border-pink-300 rounded-lg focus:ring-2 focus:ring-pink-400 outline-none placeholder-pink-300 text-pink-800"
+              required
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-4 py-3 border border-pink-300 rounded-lg focus:ring-2 focus:ring-pink-400 outline-none placeholder-pink-300 text-pink-800"
+              required
+            />
+            <button
+              type="submit"
+              className="w-full py-3 bg-pink-600 text-white font-semibold rounded-lg hover:bg-pink-700 transition-transform transform hover:scale-105 duration-300"
+            >
+              Log In
+            </button>
+          </form>
         </div>
       </div>
     </>

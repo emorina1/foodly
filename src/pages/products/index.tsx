@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Product } from "@/api/models/Product";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import { useSession } from "next-auth/react";
 
 export interface Post {
   id: string;
@@ -14,6 +15,9 @@ export interface Post {
 }
 
 export default function Products() {
+  const { data: session } = useSession();
+  const isAdmin = session?.user?.role === "admin";
+
   const { data: initialPosts, loading } = useFetch<Post[]>(
     "https://jsonplaceholder.typicode.com/posts"
   );
@@ -87,19 +91,21 @@ export default function Products() {
                     </h2>
                     <p className="text-gray-500 mb-4">{product.body}</p>
                     <p className="text-pink-800 font-bold mb-4">~ 90€ / Box</p>
-                    <div className="flex justify-center gap-4">
-                      <Link href={`/update/product/${product._id}`}>
-                        <button className="bg-[#E6007E] hover:bg-pink-800 text-white rounded-full px-5 py-2 font-semibold transition">
-                          Update
+                    {isAdmin && (
+                      <div className="flex justify-center gap-4">
+                        <Link href={`/update/product/${product._id}`}>
+                          <button className="bg-[#E6007E] hover:bg-pink-800 text-white rounded-full px-5 py-2 font-semibold transition">
+                            Update
+                          </button>
+                        </Link>
+                        <button
+                          onClick={() => handleDeleteProduct(product._id!)}
+                          className="bg-[#E6007E] hover:bg-pink-800 text-white rounded-full px-5 py-2 font-semibold transition"
+                        >
+                          Delete
                         </button>
-                      </Link>
-                      <button
-                        onClick={() => handleDeleteProduct(product._id!)}
-                        className="bg-[#E6007E] hover:bg-pink-800 text-white rounded-full px-5 py-2 font-semibold transition"
-                      >
-                        Delete
-                      </button>
-                    </div>
+                      </div>
+                    )}
                   </motion.div>
                 ))
               ) : (
@@ -109,13 +115,15 @@ export default function Products() {
               )}
             </div>
 
-            <div className="text-center mt-16">
-              <Link href="/create/product">
-                <button className="bg-pink-600 hover:bg-pink-700 text-white font-semibold px-8 py-3 rounded-full shadow-md transition">
-                  Create Product
-                </button>
-              </Link>
-            </div>
+            {isAdmin && (
+              <div className="text-center mt-16">
+                <Link href="/create/product">
+                  <button className="bg-pink-600 hover:bg-pink-700 text-white font-semibold px-8 py-3 rounded-full shadow-md transition">
+                    Create Product
+                  </button>
+                </Link>
+              </div>
+            )}
           </div>
         )}
       </div>

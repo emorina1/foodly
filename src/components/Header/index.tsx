@@ -32,32 +32,62 @@ export function Header() {
         {/* Navigation Items */}
         <div className="flex-1 flex gap-10 items-center justify-center">
           {items.map((item) => (
-            <Link
-              key={item.pathName}
-              href={item.pathName}
-              className={cs(
-                "text-pink-700 font-medium hover:text-pink-900 transition-colors duration-200",
-                {
-                  "underline underline-offset-4 decoration-pink-500 font-semibold": pathname === item.pathName,
-                }
-              )}
-            >
-              {item.name}
-            </Link>
-          ))}
+  <Link
+    key={item.pathName}
+    href={item.pathName}
+    className={cs(
+      "text-pink-700 font-medium hover:text-pink-900 transition-colors duration-200",
+      {
+        "underline underline-offset-4 decoration-pink-500 font-semibold": pathname === item.pathName,
+      }
+    )}
+  >
+    {item.name}
+  </Link>
+))}
+
+{session?.user?.role === "admin" && (
+  <Link
+    href="/dashboard/admin"
+    className={cs(
+      "text-pink-700 font-medium hover:text-pink-900 transition-colors duration-200",
+      {
+        "underline underline-offset-4 decoration-pink-500 font-semibold": pathname === "/dashboard/admin",
+      }
+    )}
+  >
+    Dashboard
+  </Link>
+)}
+
         </div>
 
-        {/* Login/Logout Buttons */}
         <div className="flex gap-5">
-          {status === "authenticated" ? (
-            <Button onClick={() => signOut({ callbackUrl: "/sign-in" })} text="Dil" />
-          ) : (
-            <>
-              <Button onClick={() => router.push("/sign-up")} text="Regjistrohu" />
-              <Button onClick={() => router.push("/sign-in")} variant="secondary" text="Login" />
-            </>
-          )}
-        </div>
+  {status === "authenticated" ? (
+    <button
+      onClick={() => signOut({ callbackUrl: "/sign-in" })}
+      className="bg-pink-500 hover:bg-pink-600 text-white font-semibold px-5 py-2 rounded-xl transition-all duration-300 hover:scale-105"
+    >
+      Log out
+    </button>
+  ) : (
+    <>
+      <button
+        onClick={() => router.push("/sign-up")}
+        className="bg-pink-500 hover:bg-pink-600 text-white font-semibold px-5 py-2 rounded-xl transition-all duration-300 hover:scale-105"
+      >
+        Register
+      </button>
+      <button
+        onClick={() => router.push("/sign-in")}
+        className="bg-white border border-pink-500 text-pink-600 hover:bg-pink-50 font-semibold px-5 py-2 rounded-xl transition-all duration-300 hover:scale-105"
+      >
+        Login
+      </button>
+    </>
+  )}
+</div>
+
       </div>
     </div>
   );

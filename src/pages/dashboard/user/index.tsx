@@ -1,15 +1,8 @@
-// 📁 src/pages/dashboard/user/index.tsx
 import { getSession } from "next-auth/react";
 import { GetServerSideProps } from "next";
-import { useRouter } from "next/router";
 
-export default function UserDashboard() {
-  return (
-    <div>
-      <h1>User Dashboard</h1>
-      <p>Welcome to your dashboard!</p>
-    </div>
-  );
+export default function Redirecting() {
+  return null;
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -24,5 +17,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
 
-  return { props: {} };
+  // ✅ Redirect ALL users to homepage instead
+  return {
+    redirect: {
+      destination: "/",
+      permanent: false,
+    },
+  };
 };
