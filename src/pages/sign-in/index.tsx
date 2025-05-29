@@ -68,9 +68,13 @@ export default function SignIn({ csrfToken }: { csrfToken: string }) {
             />
             <button
               type="submit"
-              className="w-full py-3 bg-pink-600 text-white font-semibold rounded-lg hover:bg-pink-700 transition-transform transform hover:scale-105 duration-300"
-            >
+              className="w-full py-3 bg-pink-600 text-white font-semibold rounded-lg hover:bg-pink-700 transition-transform transform hover:scale-105 duration-300">
               Log In
+            </button>
+           <button
+              onClick={() => signIn("google")}
+              className="w-full py-3 bg-pink-600 text-white font-semibold rounded-lg hover:bg-pink-700 transition-transform transform hover:scale-105 duration-300">
+              Sign in with Google
             </button>
           </form>
         </div>

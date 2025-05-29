@@ -5,6 +5,7 @@ import clientPromise from "@/lib/mongodb";
 import { compare } from "bcryptjs";
 import { getUserByEmail } from "@/api/services/User";
 import { NextAuthOptions } from "next-auth";
+import GoogleProvider from "next-auth/providers/google";
 
 const authOptions: NextAuthOptions = {
   adapter: MongoDBAdapter(clientPromise),
@@ -42,7 +43,13 @@ CredentialsProvider({
       role: user.role,
     };
   }
-})
+  
+}),
+ // Google login
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
   ],
   pages: {
     signIn: "/sign-in",
@@ -52,20 +59,22 @@ CredentialsProvider({
   },
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
-  async jwt({ token, user }) {
-    if (user) {
-      token.role = (user as { role: "admin" | "user" }).role; // ✅ Type-safe cast
-    }
-    return token;
-  },
-  async session({ session, token }) {
-    if (token && session.user) {
-      session.user.role = token.role as "admin" | "user";
-    }
-    return session;
-  },
-},
+    async jwt({ token, user, account }) {
+      if (account?.provider === "google") {
+        token.role = "user"; // Default role for Google users
+      } else if (user) {
+        token.role = (user as any).role;
+      }
+      return token;
+    },
 
+    async session({ session, token }) {
+      if (session.user) {
+        session.user.role = token.role as "admin" | "user";
+      }
+      return session;
+    },
+  },
 };
 
 export default NextAuth(authOptions);
