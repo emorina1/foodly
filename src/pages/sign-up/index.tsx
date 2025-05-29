@@ -4,7 +4,7 @@ import { User } from "@/api/models/User";
 
 export default function SignUp() {
   const router = useRouter();
-  const [user, setUser] = useState<User>({ name: "", email: "", password: "" });
+  const [user, setUser] = useState<User>({ name: "", email: "", password: "", role: "user" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 

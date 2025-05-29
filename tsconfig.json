@@ -8,9 +8,9 @@
       "@/assets/*": ["assets/*"],
       "@/lib/*": ["lib/*"],
       "@/api/*": ["api/*"],
-      "@/src/*": ["src/*"],
-      
+      "@/src/*": ["src/*"]
     },
+    "typeRoots": ["./types", "./node_modules/@types"], // 👈 Add this line
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,

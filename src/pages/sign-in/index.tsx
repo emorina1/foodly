@@ -1,4 +1,4 @@
-import { getCsrfToken, signIn } from "next-auth/react";
+import { getCsrfToken, signIn, getSession } from "next-auth/react";
 import { useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -21,8 +21,15 @@ export default function SignIn({ csrfToken }: { csrfToken: string }) {
 
     if (res?.error) {
       setError(res.error);
-    } else if (res?.url) {
-      router.push("/");
+    } else if (res?.ok) {
+      const session = await getSession();
+      const role = session?.user?.role;
+
+      if (role === "admin") {
+        router.push("/dashboard/admin");
+      } else {
+        router.push("/dashboard/user");
+      }
     }
   };
 

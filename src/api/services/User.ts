@@ -5,7 +5,11 @@ import { ObjectId } from "mongodb";
 export async function createUser(data: User) {
   const client = await clientPromise;
   const db = client.db("myapp");
-  return await db.collection("users").insertOne({ ...data, createdAt: new Date() });
+  return await db.collection("users").insertOne({
+    ...data,
+    role: data.role || "user", // ✅ Assign role if not present
+    createdAt: new Date(),
+  });
 }
 
 export async function getUserByEmail(email: string) {

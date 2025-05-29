@@ -20,8 +20,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = { name, email, password: hashedPassword, createdAt: new Date() };
-    const result = await createUser(newUser);
+   const newUser: User = {
+  name,
+  email,
+  password: hashedPassword,
+  role: "user",
+  createdAt: new Date(),
+};
+
+const result = await createUser(newUser);
 
     res.status(201).json({ message: "Përdoruesi u regjistrua me sukses", userId: result.insertedId });
   } catch (error) {

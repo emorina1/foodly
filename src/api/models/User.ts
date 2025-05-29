@@ -1,6 +1,7 @@
 export interface User {
-name: string;
-email: string;
-password: string;
-createdAt?: Date;
+  name: string;
+  email: string;
+  password: string;
+  role: "admin" | "user"; // 👈 add this
+  createdAt?: Date;
 }

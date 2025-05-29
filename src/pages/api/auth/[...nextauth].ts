@@ -9,48 +9,40 @@ import { NextAuthOptions } from "next-auth";
 const authOptions: NextAuthOptions = {
   adapter: MongoDBAdapter(clientPromise),
   providers: [
-    CredentialsProvider({
-      name: "Credentials",
-      credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" },
-      },
-      async authorize(credentials) {
-        try {
-          console.log("🔐 Login attempt with:", credentials?.email);
+    
+CredentialsProvider({
+  name: "Credentials",
+  credentials: {
+    email: { label: "Email", type: "email" },
+    password: { label: "Password", type: "password" },
+  },
+  async authorize(credentials) {
+    const creds = credentials as { email: string; password: string };
 
-          if (!credentials?.email || !credentials?.password) {
-            console.log("❌ Missing credentials");
-            throw new Error("Ju lutem plotësoni të gjitha fushat");
-          }
+    if (!creds.email || !creds.password) {
+      throw new Error("Ju lutem plotësoni të gjitha fushat");
+    }
 
-          const user = await getUserByEmail(credentials.email);
-          console.log("🔍 User found:", user);
+    const user = await getUserByEmail(creds.email);
+    if (!user) {
+      throw new Error("Email nuk ekziston");
+    }
 
-          if (!user) {
-            console.log("❌ Email nuk ekziston");
-            throw new Error("Email nuk ekziston");
-          }
+    const isValid = await compare(creds.password, user.password);
+    if (!isValid) {
+      throw new Error("Fjalëkalimi nuk është i saktë");
+    }
 
-          const isValid = await compare(credentials.password, user.password);
-          console.log("🔐 Password match:", isValid);
-
-          if (!isValid) {
-            console.log("❌ Fjalëkalimi nuk është i saktë");
-            throw new Error("Fjalëkalimi nuk është i saktë");
-          }
-
-          return {
-            id: user._id.toString(),
-            email: user.email,
-            name: user.name,
-          };
-        } catch (error) {
-          console.error("⚠️ Error in authorize:", error);
-          throw error;
-        }
-      },
-    }),
+    // ✅ Now include 'password' to match the full User type
+    return {
+      id: user._id.toString(),
+      email: user.email,
+      name: user.name,
+      password: user.password,
+      role: user.role,
+    };
+  }
+})
   ],
   pages: {
     signIn: "/sign-in",
@@ -59,7 +51,21 @@ const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   secret: process.env.NEXTAUTH_SECRET,
+  callbacks: {
+  async jwt({ token, user }) {
+    if (user) {
+      token.role = (user as { role: "admin" | "user" }).role; // ✅ Type-safe cast
+    }
+    return token;
+  },
+  async session({ session, token }) {
+    if (token && session.user) {
+      session.user.role = token.role as "admin" | "user";
+    }
+    return session;
+  },
+},
+
 };
 
-// ✅ This is the correct default export for Next.js 13 with pages routing
 export default NextAuth(authOptions);

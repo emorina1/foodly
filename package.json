@@ -20,10 +20,10 @@
     "framer-motion": "^12.15.0",
     "lucide-react": "^0.503.0",
     "mongodb": "^6.16.0",
-    "next": "15.2.3",
+    "next": "^15.3.3",
     "next-auth": "^4.24.11",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
     "react-toastify": "^11.0.5"
   },
   "devDependencies": {
