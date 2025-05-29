@@ -80,9 +80,12 @@ export default function Home() {
             <br />
             Each cake is a masterpiece of flavor and design.
           </p>
+          <Link href="/products?category=cake">
           <button className="bg-pink-500 text-white font-medium px-6 py-2 rounded-full hover:bg-pink-600 transition">
-            Shop Now
+            Check it out
           </button>
+          </Link>
+
         </div>
       </motion.section>
 
@@ -113,7 +116,7 @@ export default function Home() {
             Each bite delivers a perfect balance of flavor and joy.
           </p>
           <button className="bg-pink-500 text-white font-medium px-6 py-2 rounded-full hover:bg-pink-600 transition">
-            Shop Now
+            Check it out
           </button>
         </div>
       </motion.section>

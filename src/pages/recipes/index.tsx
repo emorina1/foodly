@@ -31,17 +31,20 @@ export default function Recipes() {
   className="bg-cover bg-center h-[70vh] w-full flex flex-col items-start justify-center px-10"
   style={{ backgroundImage: `url(${recetaImage.src})` }}
 >
-  <h1
-  className="text-6xl font-extrabold text-pink-300 font-serif drop-shadow-[2px_2px_3px_rgba(255,99,132,0.3)] tracking-wide"
-
+<h1
+  className="text-5xl md:text-6xl font-bold text-pink-700 font-serif leading-tight tracking-tight"
 >
-  Scroll, choose,<br></br> and start baking magic.
+  <span className="block">Scroll, choose,</span>
+  <span className="block">and start baking magic.</span>
 </h1>
-  <div className="flex justify-end" style={{ paddingTop: '10rem', paddingRight: '10rem' }}>
-   <button className="ml-6 px-8 py-4 bg-[#f78da7] text-white text-lg rounded-xl font-semibold hover:bg-[#f57c9b] transition shadow-lg -mt-20">
 
-      Get Started
+
+  <div className="flex justify-end" style={{ paddingTop: '10rem', paddingRight: '10rem' }}>
+    <Link href="/events?category=cake">
+    <button className="bg-gradient-to-r from-pink-500 to-pink-700 text-white font-bold text-lg px-8 py-4 rounded-full shadow-lg hover:scale-105 hover:shadow-2xl transition-all duration-300 ease-in-out">
+      🎉 Check Our Events!
     </button>
+  </Link>
   </div>
 </div>
 
