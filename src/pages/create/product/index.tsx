@@ -1,8 +1,7 @@
+import { useState } from "react";
+import { useRouter } from "next/router";
 import { Product } from "@/api/models/Product";
 import useFetch from "hooks/useFetch";
-import { useRouter } from "next/router";
-import { useState } from "react";
-import Head from "next/head";
 
 export default function CreateProduct() {
   const router = useRouter();
@@ -16,101 +15,112 @@ export default function CreateProduct() {
   const { post } = useFetch<Product[]>("/api/products");
 
   const handleCreate = async () => {
-    if (!newProduct.title || !newProduct.body || !newProduct.price) return;
-    await post(newProduct);
-    setNewProduct({ title: "", body: "", image: "", price: 0 });
-    router.push("/products");
+    if (!newProduct.title || !newProduct.body || !newProduct.price) {
+      alert("Please fill in all required fields.");
+      return;
+    }
+
+    try {
+      const result = await post(newProduct);
+      console.log("✅ Product created:", result);
+      router.push("/products");
+    } catch (error) {
+      console.error("❌ Error creating product:", error);
+      alert("An error occurred while creating the product.");
+    }
   };
 
   return (
-    <>
-      <Head>
-        <title>Create Product | My Application</title>
-      </Head>
-      <div className="pt-24 bg-gradient-to-br from-pink-50 via-pink-100 to-pink-200 min-h-screen flex items-center justify-center px-6">
-        <div className="max-w-2xl w-full bg-white rounded-3xl shadow-2xl p-10">
-          <h2 className="text-pink-700 text-4xl font-extrabold mb-10 text-center tracking-wide drop-shadow-md">
-            Add New Product
-          </h2>
+    <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-100 to-pink-200 py-12 px-4">
+      <div className="bg-white w-full max-w-xl p-8 rounded-2xl shadow-xl space-y-6">
+        <h1 className="text-3xl font-bold text-center text-pink-700">Add New Product</h1>
 
-          <input
-            type="text"
-            placeholder="Title"
-            value={newProduct.title}
-            onChange={(e) => setNewProduct({ ...newProduct, title: e.target.value })}
-            className="w-full mb-6 px-6 py-4 border-4 border-pink-300 rounded-2xl placeholder-pink-400 text-pink-700 font-semibold text-xl shadow-inner focus:outline-none focus:ring-4 focus:ring-pink-400 transition"
-          />
+        <div className="space-y-4">
+          <label className="block">
+            <span className="text-pink-700 font-medium">Title</span>
+            <input
+              type="text"
+              value={newProduct.title}
+              onChange={(e) => setNewProduct({ ...newProduct, title: e.target.value })}
+              className="mt-1 w-full border border-pink-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pink-400 text-gray-800"
+              placeholder="Product title..."
+            />
+          </label>
 
-          <textarea
-            placeholder="Description"
-            value={newProduct.body}
-            onChange={(e) => setNewProduct({ ...newProduct, body: e.target.value })}
-            className="w-full mb-6 px-6 py-4 border-4 border-pink-300 rounded-2xl placeholder-pink-400 text-pink-700 font-semibold text-xl shadow-inner resize-none focus:outline-none focus:ring-4 focus:ring-pink-400 transition"
-            rows={6}
-          />
+          <label className="block">
+            <span className="text-pink-700 font-medium">Description</span>
+            <textarea
+              value={newProduct.body}
+              onChange={(e) => setNewProduct({ ...newProduct, body: e.target.value })}
+              className="mt-1 w-full border border-pink-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pink-400 text-gray-800 resize-none"
+              rows={5}
+              placeholder="Write a short description..."
+            />
+          </label>
 
-          <input
-            type="number"
-            step="0.01"
-            placeholder="Price (€)"
-            value={newProduct.price}
-            onChange={(e) =>
-              setNewProduct({ ...newProduct, price: parseFloat(e.target.value) })
-            }
-            className="w-full mb-6 px-6 py-4 border-4 border-pink-300 rounded-2xl placeholder-pink-400 text-pink-700 font-semibold text-xl shadow-inner focus:outline-none focus:ring-4 focus:ring-pink-400 transition"
-          />
+          <label className="block">
+            <span className="text-pink-700 font-medium">Price (€)</span>
+            <input
+              type="number"
+              step="0.01"
+              value={newProduct.price}
+              onChange={(e) => setNewProduct({ ...newProduct, price: parseFloat(e.target.value) })}
+              className="mt-1 w-full border border-pink-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pink-400 text-gray-800"
+              placeholder="0.00"
+            />
+          </label>
 
-          <label className="block text-pink-600 font-semibold mb-2">Image Upload</label>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (!file) return;
+          <label className="block">
+            <span className="text-pink-700 font-medium">Image Upload</span>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (!file) return;
 
-              const formData = new FormData();
-              formData.append("image", file);
+                const formData = new FormData();
+                formData.append("image", file);
 
-              fetch("/api/upload", {
-                method: "POST",
-                body: formData,
-              })
-                .then((res) => res.json())
-                .then((data) => {
-                  if (data.url) {
-                    setNewProduct((prev) => ({ ...prev, image: data.url }));
-                  } else {
-                    alert("Upload failed: " + (data.error || "Unknown error"));
-                  }
+                fetch("/api/upload", {
+                  method: "POST",
+                  body: formData,
                 })
-                .catch((err) => {
-                  console.error("Upload error:", err);
-                  alert("Error uploading image.");
-                });
-            }}
-            className="w-full mb-6 text-pink-700 bg-pink-50 border-2 border-pink-300 rounded-lg file:font-semibold file:text-pink-600 file:border-0 file:bg-pink-200 file:px-5 file:py-2 file:rounded-full"
-          />
+                  .then((res) => res.json())
+                  .then((data) => {
+                    if (data.url) {
+                      setNewProduct((prev) => ({ ...prev, image: data.url }));
+                    } else {
+                      alert("Upload failed: " + (data.error || "Unknown error"));
+                    }
+                  })
+                  .catch((err) => {
+                    console.error("Upload error:", err);
+                    alert("An error occurred while uploading the image.");
+                  });
+              }}
+              className="mt-1 w-full text-sm text-gray-600"
+            />
+          </label>
 
           {newProduct.image && (
-            <div className="w-full flex justify-center mb-6">
-              <img
-                src={newProduct.image}
-                alt="Uploaded preview"
-                className="max-h-48 rounded-xl shadow-md"
-              />
-            </div>
+            <img
+              src={newProduct.image}
+              alt="Preview"
+              className="rounded-xl w-full h-64 object-cover border border-pink-300"
+            />
           )}
-
-          <button
-            onClick={handleCreate}
-            className="w-full py-4 bg-pink-600 hover:bg-pink-700 text-white text-xl font-bold rounded-2xl transition shadow-lg shadow-pink-400/60"
-          >
-            Add Product
-          </button>
         </div>
+
+        <button
+          onClick={handleCreate}
+          className="w-full py-3 bg-pink-600 text-white font-semibold rounded-lg hover:bg-pink-700 transition-all shadow-md"
+        >
+          Create Product
+        </button>
       </div>
-    </>
+    </section>
   );
 }
 
-CreateProduct.displayName = "Create Product | My Application";
+CreateProduct.displayName = "CreateProduct | My Application";

@@ -21,7 +21,8 @@ const itemVariants = {
 
 export default function Footer() {
   return (
-    <footer>
+    <footer className="bg-white text-pink-700">
+      {/* SVG Curve Divider */}
       <div className="relative overflow-hidden leading-[0] -mt-[1px]">
         <svg
           className="relative block w-full h-[80px]"
@@ -39,7 +40,7 @@ export default function Footer() {
         <div>
           <h4 className="text-lg font-bold text-pink-700 mb-4">SERVICES</h4>
           <motion.ul
-            className="space-y-2 text-gray-600"
+            className="space-y-2 text-gray-700"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.4 }}
@@ -64,7 +65,7 @@ export default function Footer() {
         <div>
           <h4 className="text-lg font-bold text-pink-700 mb-4">SUPPORT</h4>
           <motion.ul
-            className="space-y-2 text-gray-600"
+            className="space-y-2 text-gray-700"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.4 }}
@@ -95,7 +96,7 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Bottom Copyright Strip */}
+      {/* Bottom Copyright */}
       <div className="border-t border-pink-200 bg-pink-100">
         <div className="container mx-auto py-6 px-4 flex flex-col md:flex-row items-center justify-between gap-4">
           <Link href="/">

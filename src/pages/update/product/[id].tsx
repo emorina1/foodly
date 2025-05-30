@@ -37,48 +37,57 @@ export default function UpdateProduct() {
     router.push("/products");
   };
 
-  if (loading) return <p className="text-center mt-10">Loading...</p>;
+  if (loading)
+    return (
+      <p className="text-center mt-10 text-pink-600 font-semibold text-xl animate-pulse">
+        Loading...
+      </p>
+    );
 
   return (
-    <div className="pt-12">
-      <div className="flex flex-col items-center justify-center min-h-screen gap-y-20">
-        <div className="mb-10 max-w-2xl mx-auto bg-white p-6 rounded-xl shadow-md">
-          <h2 className="text-black text-2xl font-semibold mb-4">
-            Update Product
-          </h2>
+    <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-100 to-pink-200 py-12 px-4">
+      <div className="bg-white w-full max-w-xl p-8 rounded-2xl shadow-xl space-y-8">
+        <h1 className="text-3xl font-bold text-center text-pink-700 mb-4">
+          Update Product
+        </h1>
 
-          <input
-            type="text"
-            placeholder="Title"
-            value={newProduct.title}
-            onChange={(e) =>
-              setNewProduct({ ...newProduct, title: e.target.value })
-            }
-            className="w-full px-4 py-2 mb-4 border rounded placeholder-gray-400 text-black"
-          />
+        <div className="space-y-4">
+          <label className="block">
+            <span className="text-pink-700 font-medium">Title</span>
+            <input
+              type="text"
+              value={newProduct.title}
+              onChange={(e) => setNewProduct({ ...newProduct, title: e.target.value })}
+              className="mt-1 w-full border border-pink-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pink-400 text-gray-800"
+              placeholder="Product title..."
+            />
+          </label>
 
-          <textarea
-            placeholder="Description"
-            value={newProduct.body}
-            onChange={(e) =>
-              setNewProduct({ ...newProduct, body: e.target.value })
-            }
-            className="w-full px-4 py-2 mb-4 border rounded placeholder-gray-400 text-black"
-          />
+          <label className="block">
+            <span className="text-pink-700 font-medium">Description</span>
+            <textarea
+              value={newProduct.body}
+              onChange={(e) => setNewProduct({ ...newProduct, body: e.target.value })}
+              className="mt-1 w-full border border-pink-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pink-400 text-gray-800 resize-none"
+              rows={5}
+              placeholder="Product description..."
+            />
+          </label>
 
-          <input
-            type="number"
-            step="0.01"
-            placeholder="Price (€)"
-            value={newProduct.price}
-            onChange={(e) =>
-              setNewProduct({ ...newProduct, price: parseFloat(e.target.value) })
-            }
-            className="w-full px-4 py-2 mb-4 border rounded placeholder-gray-400 text-black"
-          />
+          <label className="block">
+            <span className="text-pink-700 font-medium">Price (€)</span>
+            <input
+              type="number"
+              step="0.01"
+              value={newProduct.price}
+              onChange={(e) => setNewProduct({ ...newProduct, price: parseFloat(e.target.value) })}
+              className="mt-1 w-full border border-pink-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pink-400 text-gray-800"
+              placeholder="0.00"
+            />
+          </label>
 
-          <div className="w-full px-4 py-2 mb-4">
-            <label className="block text-gray-600 mb-2">Image Upload</label>
+          <label className="block">
+            <span className="text-pink-700 font-medium">Image Upload</span>
             <input
               type="file"
               accept="image/*"
@@ -98,27 +107,37 @@ export default function UpdateProduct() {
                     if (data.url) {
                       setNewProduct((prev) => ({ ...prev, image: data.url }));
                     } else {
-                      alert("Upload dështoi: " + (data.error || "Gabim i panjohur"));
+                      alert("Upload failed: " + (data.error || "Unknown error"));
                     }
                   })
                   .catch((err) => {
-                    console.error("Gabim gjatë upload-it:", err);
-                    alert("Gabim gjatë ngarkimit të fotos.");
+                    console.error("Upload error:", err);
+                    alert("An error occurred while uploading the image.");
                   });
               }}
-              className="block w-full text-sm text-gray-600 bg-pink-50 border border-pink-300 rounded cursor-pointer focus:outline-none"
+              className="mt-1 w-full text-sm text-gray-600 bg-pink-50 border border-pink-300 rounded cursor-pointer focus:outline-none"
             />
-          </div>
+          </label>
 
+          {newProduct.image && (
+            <img
+              src={newProduct.image}
+              alt="Preview"
+              className="rounded-xl w-full h-64 object-cover border border-pink-300"
+            />
+          )}
+        </div>
+
+        <div className="pt-4">
           <button
             onClick={handleUpdate}
-            className="px-6 py-2 bg-green-600 text-white rounded-xl hover:bg-green-700 transition"
+            className="w-full py-3 bg-pink-600 text-white font-semibold rounded-lg hover:bg-pink-700 transition-all shadow-md"
           >
             Update Product
           </button>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 

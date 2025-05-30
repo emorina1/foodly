@@ -12,15 +12,14 @@ import User1 from "@/assets/images/p2.png";
 import User2 from "@/assets/images/p1.png";
 import { useRouter } from "next/navigation";
 
-
 export default function AboutUs() {
   const router = useRouter();
   return (
     <section className="relative bg-pink-50 overflow-hidden">
-      {/* Background texture */}
       <Head>
         <title>About | Cake Shop</title>
       </Head>
+
       <div className="absolute inset-0 -z-10">
         <Image
           src={BgTexture}
@@ -41,26 +40,24 @@ export default function AboutUs() {
             viewport={{ once: true }}
             transition={{ duration: 1 }}
           >
-            <h2 className="text-5xl font-extrabold text-pink-600 mb-6 leading-tight">
+            <h2 className="text-6xl font-extrabold text-pink-600 mb-8 leading-tight">
               We create sweet moments
             </h2>
-            <p className="text-gray-700 text-lg leading-relaxed mb-4">
+            <p className="text-gray-700 text-xl leading-relaxed mb-6">
               At Cake Haven, every dessert is a masterpiece. We use fresh ingredients,
               traditional recipes, and love in every layer to bring joy to your celebrations.
             </p>
-            <p className="text-gray-700 text-lg leading-relaxed mb-6">
+            <p className="text-gray-700 text-xl leading-relaxed mb-8">
               From a sweet breakfast to a grand birthday, we’re here to make every moment special.
               Our products reflect passion and commitment to quality and excellent taste.
             </p>
             <motion.button
-  whileTap={{ scale: 0.95 }}
-  className="px-6 py-3 bg-pink-500 hover:bg-pink-600 text-white font-medium rounded-full shadow-lg transition"
-  onClick={() => router.push("/recipes")}
->
-  Learn more
-</motion.button>
-
-
+              whileTap={{ scale: 0.95 }}
+              className="px-6 py-3 bg-pink-500 hover:bg-pink-600 text-white text-lg font-semibold rounded-full shadow-lg transition"
+              onClick={() => router.push("/recipes")}
+            >
+              Learn more
+            </motion.button>
           </motion.div>
 
           <motion.div
@@ -70,24 +67,23 @@ export default function AboutUs() {
             viewport={{ once: true }}
             transition={{ duration: 1.2 }}
           >
-           <div className="overflow-hidden rounded-full transform group-hover:scale-105 transition duration-500 w-[350px] h-[350px] mx-auto md:w-[550px] md:h-[550px]">
-  <Image
-    src={CakeImage}
-    alt="About Cake"
-    width={600}
-    height={600}
-    className="object-cover"
-    priority
-  />
-</div>
-
+            <div className="overflow-hidden rounded-full transform group-hover:scale-105 transition duration-500 w-[350px] h-[350px] mx-auto md:w-[550px] md:h-[550px]">
+              <Image
+                src={CakeImage}
+                alt="About Cake"
+                width={600}
+                height={600}
+                className="object-cover"
+                priority
+              />
+            </div>
           </motion.div>
         </div>
 
         {/* Our Advantages */}
         <div className="py-16">
           <div className="max-w-5xl mx-auto px-6">
-            <h2 className="text-4xl font-extrabold text-pink-600 mb-12 text-center">
+            <h2 className="text-5xl font-extrabold text-pink-600 mb-12 text-center">
               Our Advantages
             </h2>
             <div className="grid md:grid-cols-3 gap-12 text-center">
@@ -120,8 +116,8 @@ export default function AboutUs() {
                   transition={{ delay: i * 0.2, duration: 0.8 }}
                 >
                   <div className="text-6xl mb-5">{emoji}</div>
-                  <h3 className="text-2xl font-semibold text-pink-700 mb-2">{title}</h3>
-                  <p className="text-pink-900 text-base">{desc}</p>
+                  <h3 className="text-3xl font-semibold text-pink-700 mb-4">{title}</h3>
+                  <p className="text-pink-900 text-lg">{desc}</p>
                 </motion.div>
               ))}
             </div>
@@ -134,7 +130,7 @@ export default function AboutUs() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 1 }}
-          className="grid md:grid-cols-2 gap-10 items-center bg-pink-200 p-8 rounded-xl"
+          className="grid md:grid-cols-2 gap-10 items-center bg-pink-200 p-10 rounded-xl"
         >
           <div className="w-full max-w-sm mx-auto">
             <Image
@@ -147,8 +143,8 @@ export default function AboutUs() {
             />
           </div>
           <div>
-            <h3 className="text-3xl font-bold text-pink-600 mb-6">Our Story</h3>
-            <p className="text-gray-700 text-lg leading-relaxed">
+            <h3 className="text-4xl font-bold text-pink-600 mb-6">Our Story</h3>
+            <p className="text-gray-700 text-xl leading-relaxed">
               We started this journey from a simple love of baking. What began
               as a hobby turned into a mission to bring joy to every Albanian table.
               With dedication, creativity, and the support of our loyal customers,
@@ -158,7 +154,7 @@ export default function AboutUs() {
           </div>
         </motion.div>
 
-        {/* Testimonials slider */}
+        {/* Testimonials */}
         <TestimonialsSlider />
       </div>
     </section>
@@ -182,8 +178,6 @@ function TestimonialsSlider() {
   const [current, setCurrent] = useState(0);
   const length = testimonials.length;
 
-
-
   useEffect(() => {
     const timer = setTimeout(() => {
       setCurrent((prev) => (prev === length - 1 ? 0 : prev + 1));
@@ -199,7 +193,7 @@ function TestimonialsSlider() {
 
   return (
     <section className="max-w-4xl mx-auto px-4 mt-20">
-      <div className="relative bg-white rounded-2xl shadow-lg p-8 text-center">
+      <div className="relative bg-white rounded-2xl shadow-lg p-10 text-center">
         <AnimatePresence mode="wait">
           <motion.div
             key={current}
@@ -217,8 +211,8 @@ function TestimonialsSlider() {
               height={100}
               className="rounded-full object-cover mb-6 shadow-md"
             />
-            <p className="text-gray-700 italic text-lg mb-4">“{testimonials[current].text}”</p>
-            <div className="text-pink-600 font-semibold text-xl">— {testimonials[current].name}</div>
+            <p className="text-gray-700 italic text-xl mb-4">“{testimonials[current].text}”</p>
+            <div className="text-pink-600 font-semibold text-2xl">— {testimonials[current].name}</div>
           </motion.div>
         </AnimatePresence>
 
@@ -228,15 +222,7 @@ function TestimonialsSlider() {
           className="absolute top-1/2 left-4 -translate-y-1/2 text-pink-600 hover:text-pink-800 transition"
           aria-label="Previous testimonial"
         >
-          <svg
-            className="w-8 h-8"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            viewBox="0 0 24 24"
-          >
+          <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
             <path d="M15 18l-6-6 6-6" />
           </svg>
         </button>
@@ -245,15 +231,7 @@ function TestimonialsSlider() {
           className="absolute top-1/2 right-4 -translate-y-1/2 text-pink-600 hover:text-pink-800 transition"
           aria-label="Next testimonial"
         >
-          <svg
-            className="w-8 h-8"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            viewBox="0 0 24 24"
-          >
+          <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
             <path d="M9 18l6-6-6-6" />
           </svg>
         </button>
