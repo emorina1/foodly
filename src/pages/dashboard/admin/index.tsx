@@ -6,6 +6,7 @@ import { getAllUsers, getTotalRecipes } from "@/api/services/Admin";
 import { getTotalProducts } from "@/api/services/Product";
 import { getAllMessages } from "@/api/services/Message";
 import { ObjectId } from "mongodb";
+import Link from "next/link";
 
 type User = {
   _id: string | ObjectId;
@@ -39,7 +40,7 @@ export default function AdminDashboard({
     <div className="p-10">
       <h1 className="pt-24 p-10 text-3xl font-bold mb-6 text-pink-600">Admin Dashboard</h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="bg-white p-6 rounded shadow">
           <h2 className="text-xl font-semibold text-pink-600">Total Users</h2>
           <p className="text-2xl text-pink-600">{users.length}</p>
@@ -53,6 +54,20 @@ export default function AdminDashboard({
         <div className="bg-white p-6 rounded shadow">
           <h2 className="text-xl font-semibold text-pink-600">Total Products</h2>
           <p className="text-2xl text-pink-600">{productCount}</p>
+        </div>
+
+        {/* ✅ New Cart Access Card */}
+        <div className="bg-white p-6 rounded shadow flex flex-col justify-between">
+          <div>
+            <h2 className="text-xl font-semibold text-pink-600 mb-2">🛒 Cart Overview</h2>
+            <p className="text-pink-500 text-sm">View current cart details.</p>
+          </div>
+          <Link
+            href="/dashboard/admin/cart"
+            className="mt-4 bg-pink-600 hover:bg-pink-700 text-white font-semibold px-4 py-2 rounded-lg text-center transition"
+          >
+            Go to Cart
+          </Link>
         </div>
       </div>
 

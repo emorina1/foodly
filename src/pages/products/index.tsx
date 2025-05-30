@@ -7,6 +7,8 @@ import { Product } from "@/api/models/Product";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import { useSession } from "next-auth/react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export interface Post {
   id: string;
@@ -48,6 +50,20 @@ export default function Products() {
       alert("Error while deleting product.");
       console.error(error);
     }
+  };
+
+  const handleAddToCart = (product: Product) => {
+    const existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
+    const updatedCart = [...existingCart, product];
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+
+    toast("✅ Added to your cart", {
+      className: "bg-pink-600 text-white font-semibold rounded-lg shadow-lg",
+    });
+
+    setTimeout(() => {
+      router.push("/cart");
+    }, 1200);
   };
 
   return (
@@ -97,6 +113,15 @@ export default function Products() {
                       <p className="text-gray-400 italic mb-4">Price not available</p>
                     )}
 
+                    {!isAdmin && (
+                      <button
+                        onClick={() => handleAddToCart(product)}
+                        className="bg-pink-500 hover:bg-pink-700 text-white px-6 py-2 rounded-full mb-4 font-semibold transition"
+                      >
+                        Add to Cart
+                      </button>
+                    )}
+
                     {isAdmin && (
                       <div className="flex justify-center gap-4">
                         <Link href={`/update/product/${product._id}`}>
@@ -133,6 +158,9 @@ export default function Products() {
           </div>
         )}
       </div>
+
+      {/* ✅ Toast container goes at the bottom of your layout */}
+      <ToastContainer position="top-center" autoClose={3000} theme="colored" />
     </div>
   );
 }

@@ -4,7 +4,6 @@ import Image from "next/image";
 import Logo from "@/assets/icons/logo.png";
 import cs from "classnames";
 import { signOut, useSession } from "next-auth/react";
-import Button from "../shared/Button";
 import { useRouter } from "next/router";
 
 export function Header() {
@@ -13,17 +12,20 @@ export function Header() {
   const router = useRouter();
 
   const isAdmin = session?.user?.role === "admin";
+  const isUser = session?.user && !isAdmin;
 
   const items = [
     { name: "Home", pathName: "/" },
-    // Hide both About and Contact for admin users
-    ...(!isAdmin ? [
-      { name: "About", pathName: "/about" },
-      { name: "Contact Us", pathName: "/contact" },
-    ] : []),
+    ...(!isAdmin
+      ? [
+          { name: "About", pathName: "/about" },
+          { name: "Contact Us", pathName: "/contact" },
+        ]
+      : []),
     { name: "Products", pathName: "/products" },
     { name: "Events", pathName: "/events" },
     { name: "Recipes", pathName: "/recipes" },
+    ...(isUser ? [{ name: "Cart", pathName: "/cart" }] : []), // ✅ Only for users
   ];
 
   return (
@@ -41,9 +43,10 @@ export function Header() {
               key={item.pathName}
               href={item.pathName}
               className={cs(
-                "text-pink-700 font-medium hover:text-pink-900 transition-colors duration-200",
+                "text-pink-700 font-serif text-lg hover:text-pink-900 transition-colors duration-200",
                 {
-                  "underline underline-offset-4 decoration-pink-500 font-semibold": pathname === item.pathName,
+                  "underline underline-offset-4 decoration-pink-500 font-bold":
+                    pathname === item.pathName,
                 }
               )}
             >
@@ -55,9 +58,10 @@ export function Header() {
             <Link
               href="/dashboard/admin"
               className={cs(
-                "text-pink-700 font-medium hover:text-pink-900 transition-colors duration-200",
+                "text-pink-700 font-serif text-lg hover:text-pink-900 transition-colors duration-200",
                 {
-                  "underline underline-offset-4 decoration-pink-500 font-semibold": pathname === "/dashboard/admin",
+                  "underline underline-offset-4 decoration-pink-500 font-bold":
+                    pathname === "/dashboard/admin",
                 }
               )}
             >
@@ -66,11 +70,12 @@ export function Header() {
           )}
         </div>
 
+        {/* Buttons */}
         <div className="flex gap-5">
           {status === "authenticated" ? (
             <button
               onClick={() => signOut({ callbackUrl: "/sign-in" })}
-              className="bg-pink-500 hover:bg-pink-600 text-white font-semibold px-5 py-2 rounded-xl transition-all duration-300 hover:scale-105"
+              className="bg-pink-500 hover:bg-pink-600 text-white font-sans font-semibold px-5 py-2 rounded-xl transition-all duration-300 hover:scale-105"
             >
               Log out
             </button>
@@ -78,13 +83,13 @@ export function Header() {
             <>
               <button
                 onClick={() => router.push("/sign-up")}
-                className="bg-pink-500 hover:bg-pink-600 text-white font-semibold px-5 py-2 rounded-xl transition-all duration-300 hover:scale-105"
+                className="bg-pink-500 hover:bg-pink-600 text-white font-sans font-semibold px-5 py-2 rounded-xl transition-all duration-300 hover:scale-105"
               >
                 Register
               </button>
               <button
                 onClick={() => router.push("/sign-in")}
-                className="bg-white border border-pink-500 text-pink-600 hover:bg-pink-50 font-semibold px-5 py-2 rounded-xl transition-all duration-300 hover:scale-105"
+                className="bg-white border border-pink-500 text-pink-600 hover:bg-pink-50 font-sans font-semibold px-5 py-2 rounded-xl transition-all duration-300 hover:scale-105"
               >
                 Login
               </button>

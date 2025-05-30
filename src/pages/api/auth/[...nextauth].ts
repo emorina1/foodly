@@ -55,20 +55,17 @@ export const authOptions: AuthOptions = {
   },
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
-    async jwt({ token, user, account }) {
-      if (account?.provider === "google") {
-        token.role = "user"; // Default role for Google users
-      } else if (user) {
-        token.role = (user as any).role;
-      }
-      return token;
-    },
-    async session({ session, token }) {
-      if (session.user) {
-        session.user.role = token.role as "admin" | "user";
-      }
-      return session;
-    },
+    async jwt({ token, user }) {
+  if (user) {
+    token.role = user.role; // Always set role from user object
+  }
+  return token;
+},
+   async session({ session, token }) {
+  session.user.role = token.role as "admin" | "user";
+  return session;
+},
+
   },
 };
 

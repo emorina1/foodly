@@ -1,8 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": "src",
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "baseUrl": "src", // Root path for module resolution
     "paths": {
       "@/components/*": ["components/*"],
       "@/assets/*": ["assets/*"],
@@ -10,18 +8,20 @@
       "@/api/*": ["api/*"],
       "@/src/*": ["src/*"]
     },
-    "typeRoots": ["./types", "./node_modules/@types"], // 👈 Add this line
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
-    "esModuleInterop": true,
+    "typeRoots": ["./types", "./node_modules/@types"], // Custom + node type definitions
+    "target": "esnext", // Use latest ECMAScript features
+    "lib": ["dom", "dom.iterable", "esnext"],
     "module": "esnext",
-    "moduleResolution": "bundler",
+    "moduleResolution": "bundler", // Optimized for bundlers like Vite/Turbopack
+    "allowJs": true,
+    "skipLibCheck": true, // Faster builds
+    "strict": true, // Enable all strict type checks
+    "noEmit": true, // Do not emit JS output
+    "esModuleInterop": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true
+    "jsx": "preserve", // Let Next.js handle JSX
+    "incremental": true // Speeds up rebuilds
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
