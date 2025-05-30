@@ -1,14 +1,14 @@
+// lib/authOptions.ts or /pages/api/auth/[...nextauth].ts
+
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
-import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
-import clientPromise from "@/lib/mongodb";
 import { compare } from "bcryptjs";
 import { getUserByEmail } from "@/api/services/User";
 import type { AuthOptions } from "next-auth";
 
 export const authOptions: AuthOptions = {
-  adapter: MongoDBAdapter(clientPromise),
+  // ⛔ Removed MongoDB adapter
   providers: [
     CredentialsProvider({
       name: "Credentials",
