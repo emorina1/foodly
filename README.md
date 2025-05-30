@@ -34,6 +34,7 @@ This project aims to simplify the development of engaging culinary applications.
 Make sure you have the following:
 
 💻 Programming Language: TypeScript
+
 📦 Package Manager: NPM
 
 🔧 Installation
