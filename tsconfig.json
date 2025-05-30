@@ -22,6 +22,7 @@
     "isolatedModules": true,
     "jsx": "preserve", // Let Next.js handle JSX
     "incremental": true // Speeds up rebuilds
+    
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
