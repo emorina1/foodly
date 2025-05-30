@@ -3,12 +3,13 @@ import clientPromise from "@/lib/mongodb";
 import { Product } from "@/api/models/Product";
 import { ObjectId } from "mongodb";
 
+// Create a new product
 export async function createProduct(data: Product) {
   try {
     const client = await clientPromise;
     const db = client.db("myapp");
 
-    const { _id, ...rest } = data;
+    const { _id, ...rest } = data; // Remove _id if present
     const result = await db.collection("products").insertOne({
       ...rest,
       createdAt: new Date(),
@@ -21,6 +22,7 @@ export async function createProduct(data: Product) {
   }
 }
 
+// Get all products
 export async function getProducts() {
   try {
     const client = await clientPromise;
@@ -37,6 +39,7 @@ export async function getProducts() {
   }
 }
 
+// Get single product by ID
 export async function getProduct(id: string) {
   const client = await clientPromise;
   const db = client.db("myapp");
@@ -44,6 +47,7 @@ export async function getProduct(id: string) {
   return product;
 }
 
+// Update a product
 export async function updateProduct(id: string, data: Product) {
   const client = await clientPromise;
   const db = client.db("myapp");
@@ -53,6 +57,7 @@ export async function updateProduct(id: string, data: Product) {
   return product;
 }
 
+// Delete a product
 export async function deleteProduct(id: string) {
   const client = await clientPromise;
   const db = client.db("myapp");
@@ -60,4 +65,17 @@ export async function deleteProduct(id: string) {
     .collection("products")
     .deleteOne({ _id: new ObjectId(id) });
   return product;
+}
+
+// Get total number of products
+export async function getTotalProducts() {
+  try {
+    const client = await clientPromise;
+    const db = client.db("myapp");
+    const count = await db.collection("products").countDocuments();
+    return count;
+  } catch (error) {
+    console.error("❌ Error in getTotalProducts():", error);
+    throw error;
+  }
 }

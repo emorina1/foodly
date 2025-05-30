@@ -53,7 +53,7 @@ export default function Products() {
   return (
     <div className="pt-12">
       <Head>
-        <title>Products | Cake Shop </title>
+        <title>Products | Cake Shop</title>
       </Head>
 
       <div className="flex flex-col items-center justify-center min-h-screen gap-y-20">
@@ -90,7 +90,13 @@ export default function Products() {
                       {product.title}
                     </h2>
                     <p className="text-gray-500 mb-4">{product.body}</p>
-                    <p className="text-pink-800 font-bold mb-4">~ 90€ / Box</p>
+
+                    {product.price ? (
+                      <p className="text-pink-800 font-bold mb-4">~ {product.price}€</p>
+                    ) : (
+                      <p className="text-gray-400 italic mb-4">Price not available</p>
+                    )}
+
                     {isAdmin && (
                       <div className="flex justify-center gap-4">
                         <Link href={`/update/product/${product._id}`}>

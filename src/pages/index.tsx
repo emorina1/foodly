@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import home from "@/assets/images/home.png";
+import homee from "@/assets/images/homee.jpg";
 import cake from "@/assets/images/cake.jpg";
 import cupcake from "@/assets/images/cupcake.jpg";
 
@@ -25,7 +25,7 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative w-full h-[90vh] flex items-center justify-center overflow-hidden">
         <Image
-          src={home}
+          src={homee}
           alt="Cake background"
           fill
           className="object-cover z-0"

@@ -6,13 +6,19 @@ import Head from "next/head";
 
 export default function CreateProduct() {
   const router = useRouter();
-  const [newProduct, setNewProduct] = useState({ title: "", body: "", image: "" });
+  const [newProduct, setNewProduct] = useState<Product>({
+    title: "",
+    body: "",
+    image: "",
+    price: 0,
+  });
+
   const { post } = useFetch<Product[]>("/api/products");
 
   const handleCreate = async () => {
-    if (!newProduct.title || !newProduct.body) return;
+    if (!newProduct.title || !newProduct.body || !newProduct.price) return;
     await post(newProduct);
-    setNewProduct({ title: "", body: "", image: "" });
+    setNewProduct({ title: "", body: "", image: "", price: 0 });
     router.push("/products");
   };
 
@@ -41,6 +47,17 @@ export default function CreateProduct() {
             onChange={(e) => setNewProduct({ ...newProduct, body: e.target.value })}
             className="w-full mb-6 px-6 py-4 border-4 border-pink-300 rounded-2xl placeholder-pink-400 text-pink-700 font-semibold text-xl shadow-inner resize-none focus:outline-none focus:ring-4 focus:ring-pink-400 transition"
             rows={6}
+          />
+
+          <input
+            type="number"
+            step="0.01"
+            placeholder="Price (€)"
+            value={newProduct.price}
+            onChange={(e) =>
+              setNewProduct({ ...newProduct, price: parseFloat(e.target.value) })
+            }
+            className="w-full mb-6 px-6 py-4 border-4 border-pink-300 rounded-2xl placeholder-pink-400 text-pink-700 font-semibold text-xl shadow-inner focus:outline-none focus:ring-4 focus:ring-pink-400 transition"
           />
 
           <label className="block text-pink-600 font-semibold mb-2">Image Upload</label>

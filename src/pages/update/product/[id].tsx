@@ -7,7 +7,12 @@ export default function UpdateProduct() {
   const router = useRouter();
   const { id } = router.query;
 
-  const [newProduct, setNewProduct] = useState({ title: "", body: "", image: "" });
+  const [newProduct, setNewProduct] = useState<Product>({
+    title: "",
+    body: "",
+    image: "",
+    price: 0,
+  });
 
   const {
     data: existingProduct,
@@ -18,9 +23,10 @@ export default function UpdateProduct() {
   useEffect(() => {
     if (existingProduct) {
       setNewProduct({
-        title: existingProduct.title,
-        body: existingProduct.body,
-        image: existingProduct.image || ""
+        title: existingProduct.title || "",
+        body: existingProduct.body || "",
+        image: existingProduct.image || "",
+        price: existingProduct.price ?? 0,
       });
     }
   }, [existingProduct]);
@@ -40,6 +46,7 @@ export default function UpdateProduct() {
           <h2 className="text-black text-2xl font-semibold mb-4">
             Update Product
           </h2>
+
           <input
             type="text"
             placeholder="Title"
@@ -49,6 +56,7 @@ export default function UpdateProduct() {
             }
             className="w-full px-4 py-2 mb-4 border rounded placeholder-gray-400 text-black"
           />
+
           <textarea
             placeholder="Description"
             value={newProduct.body}
@@ -57,6 +65,18 @@ export default function UpdateProduct() {
             }
             className="w-full px-4 py-2 mb-4 border rounded placeholder-gray-400 text-black"
           />
+
+          <input
+            type="number"
+            step="0.01"
+            placeholder="Price (€)"
+            value={newProduct.price}
+            onChange={(e) =>
+              setNewProduct({ ...newProduct, price: parseFloat(e.target.value) })
+            }
+            className="w-full px-4 py-2 mb-4 border rounded placeholder-gray-400 text-black"
+          />
+
           <div className="w-full px-4 py-2 mb-4">
             <label className="block text-gray-600 mb-2">Image Upload</label>
             <input
@@ -89,6 +109,7 @@ export default function UpdateProduct() {
               className="block w-full text-sm text-gray-600 bg-pink-50 border border-pink-300 rounded cursor-pointer focus:outline-none"
             />
           </div>
+
           <button
             onClick={handleUpdate}
             className="px-6 py-2 bg-green-600 text-white rounded-xl hover:bg-green-700 transition"
