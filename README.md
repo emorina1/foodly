@@ -1,40 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+🍽️ FOODLY
+✨ Savor Every Moment with Culinary Creativity Unleashed
 
-## Getting Started
+🛠️ Built with the tools and technologies:
+SCSS   Markdown   npm   JavaScript   MongoDB   React   TypeScript   ESLint
 
-First, run the development server:
+📚 Table of Contents
+🔍 Overview
+🚀 Getting Started
+🧰 Prerequisites
+🔧 Installation
+▶️ Usage
+🧪 Testing
+-------------------------------------------------------------------------------------------------
+🔍 Overview
+Foodly is a powerful web application designed for food-related services, leveraging modern technologies to enhance user experience.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+🧑‍🍳 Why Foodly?
+This project aims to simplify the development of engaging culinary applications. The core features include:
+🎨 Tailwind CSS Integration – Streamlines styling with utility-first CSS, enhancing UI/UX.
+⚡ Next.js Framework – Supports server-side rendering and dynamic routing for fast, responsive apps.
+🔐 User Authentication – Secure sign-in options with role-based access control.
+🍲 Dynamic Content Management – Easy CRUD for products and recipes to boost engagement.
+🔤 TypeScript Support – Type safety and better structure to avoid runtime bugs.
+🔌 API Integration – Seamless backend communication for efficient data handling.
+------------------------------------------------------------------------------------------------
+🚀 Getting Started
+🧰 Prerequisites
+Make sure you have the following:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+💻 Programming Language: TypeScript
+📦 Package Manager: NPM
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+🔧 Installation
+Follow these steps:
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+1. Clone the repository:
+  > git clone https://github.com/emorina1/foodly
+2. Navigate to the project directory:
+  > cd foodly
+3. Install the dependencies using npm:
+  > npm install
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+▶️ Usage
+To run the project:
+>npm start
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+🧪 Testing
+To run the test suite:
+>npm test 
 
-## Learn More
+Linku i applikacionit:
+http://localhost:3000/
 
-To learn more about Next.js, take a look at the following resources:
+Screenshots
+![App Screenshot](./screenshots/preview.png)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+Dea Mani (Full Stack Developer, Project Manager, Database Administrator (DBA))
+Elsa Morina (Full Stack Developer, Project Manager)
+Adi Berisha (Backend Developer)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
