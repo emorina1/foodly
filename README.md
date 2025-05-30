@@ -15,14 +15,16 @@ SCSS   Markdown   npm   JavaScript   MongoDB   React   TypeScript   ESLin
 🔍 Overview
 Foodly is a powerful web application designed for food-related services, leveraging modern technologies to enhance user experience.
 
-🧑‍🍳 Why Foodly?
+**🧑‍🍳 Why Foodly?**
+
 This project aims to simplify the development of engaging culinary applications. The core features include:
-🎨 Tailwind CSS Integration – Streamlines styling with utility-first CSS, enhancing UI/UX.
-⚡ Next.js Framework – Supports server-side rendering and dynamic routing for fast, responsive apps.
-🔐 User Authentication – Secure sign-in options with role-based access control.
-🍲 Dynamic Content Management – Easy CRUD for products and recipes to boost engagement.
-🔤 TypeScript Support – Type safety and better structure to avoid runtime bugs.
-🔌 API Integration – Seamless backend communication for efficient data handling.
+
+- 🎨 **Tailwind CSS Integration** – Streamlines styling with utility-first CSS, enhancing UI/UX.
+- ⚡ **Next.js Framework** – Supports server-side rendering and dynamic routing for fast, responsive apps.
+- 🔐 **User Authentication** – Secure sign-in options with role-based access control.
+- 🍲 **Dynamic Content Management** – Easy CRUD for products and recipes to boost engagement.
+- 🔤 **TypeScript Support** – Type safety and better structure to avoid runtime bugs.
+- 🔌 **API Integration** – Seamless backend communication for efficient data handling.
 ------------------------------------------------------------------------------------------------
 🚀 Getting Started
 🧰 Prerequisites
