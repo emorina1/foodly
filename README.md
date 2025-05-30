@@ -4,13 +4,15 @@
 🛠️ Built with the tools and technologies:
 SCSS   Markdown   npm   JavaScript   MongoDB   React   TypeScript   ESLint
 
-📚 Table of Contents
-🔍 Overview
-🚀 Getting Started
-🧰 Prerequisites
-🔧 Installation
-▶️ Usage
-🧪 Testing
+**📚 Table of Contents**
+
+- 🔍 [Overview]
+- 🚀 [Getting Started]
+- 🧰 [Prerequisites]
+- 🔧 [Installation]
+- ▶️ [Usage]
+- 🧪 [Testing]
+
 -------------------------------------------------------------------------------------------------
 🔍 Overview
 Foodly is a powerful web application designed for food-related services, leveraging modern technologies to enhance user experience.
