@@ -30,6 +30,7 @@ This project aims to simplify the development of engaging culinary applications.
 ------------------------------------------------------------------------------------------------
 🚀 Getting Started
 🧰 Prerequisites
+
 Make sure you have the following:
 
 💻 Programming Language: TypeScript
