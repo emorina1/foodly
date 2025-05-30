@@ -1,5 +1,5 @@
 // pages/products/ssr/[id].tsx
-
+// dummy change to force rebuild
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
