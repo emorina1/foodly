@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import Script from "next/script"; // <-- Import Script
+
 import homee from "@/assets/images/homee.jpg";
 import cake from "@/assets/images/cake.jpg";
 import cupcake from "@/assets/images/cupcake.jpg";
@@ -22,29 +24,50 @@ const itemVariants = {
 export default function Home() {
   return (
     <div className="pt-14 bg-white text-gray-800 font-sans">
+      {/* Inline JavaScript script using next/script */}
+      <Script id="url-rewrite-fix" strategy="afterInteractive">
+        {`
+          (function (l) {
+            if (l.search[1] === "/") {
+              var decoded = l.search
+                .slice(1)
+                .split("&")
+                .map(function (s) {
+                  return s.replace(/~and~/g, "&");
+                })
+                .join("?");
+              window.history.replaceState(
+                null,
+                null,
+                l.pathname.slice(0, -1) + decoded + l.hash
+              );
+            }
+          })(window.location);
+        `}
+      </Script>
+
       {/* Hero Section */}
       <section className="relative w-full h-[90vh] flex items-center justify-center overflow-hidden">
-      <Image
-        src={homee}
-        alt="Cake background"
-        fill
-        className="object-cover z-0"
-        priority
-      />
+        <Image
+          src={homee}
+          alt="Cake background"
+          fill
+          className="object-cover z-0"
+          priority
+        />
 
-      <div className="z-20 text-center text-white px-4">
-        <h1 className="text-5xl md:text-6xl font-bold mb-6 drop-shadow-lg text-pink-500">
-          Cooking. Tasting. Living.
-        </h1>
+        <div className="z-20 text-center text-white px-4">
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 drop-shadow-lg text-pink-500">
+            Cooking. Tasting. Living.
+          </h1>
 
-        <Link href="/products">
-          <button className="bg-white text-pink-600 font-semibold px-6 py-3 rounded-full shadow-md hover:bg-pink-100 transition">
-            Check Our Products
-          </button>
-        </Link>
-      </div>
-    </section>
-
+          <Link href="/products">
+            <button className="bg-white text-pink-600 font-semibold px-6 py-3 rounded-full shadow-md hover:bg-pink-100 transition">
+              Check Our Products
+            </button>
+          </Link>
+        </div>
+      </section>
 
       {/* Services Intro */}
       <motion.section
@@ -82,11 +105,10 @@ export default function Home() {
             Each cake is a masterpiece of flavor and design.
           </p>
           <Link href="/products?category=cake">
-          <button className="bg-pink-500 text-white font-medium px-6 py-2 rounded-full hover:bg-pink-600 transition">
-            Check it out
-          </button>
+            <button className="bg-pink-500 text-white font-medium px-6 py-2 rounded-full hover:bg-pink-600 transition">
+              Check it out
+            </button>
           </Link>
-
         </div>
       </motion.section>
 
