@@ -12,16 +12,18 @@ export default async function handler(
       const result = await createProduct(newProduct);
       res.status(201).json(result);
     } catch (error) {
-      res.status(500).json(error);
+      console.error("❌ Error creating product:", error); // e përdorim error-in
+      res.status(500).json({ message: "Gabim gjatë krijimit të produktit." });
     }
   } else if (req.method === "GET") {
     try {
       const products = await getProducts();
       res.status(200).json(products);
     } catch (error) {
-      res.status(500).json(error);
+      console.error("❌ Error fetching products:", error); // e përdorim error-in
+      res.status(500).json({ message: "Gabim gjatë marrjes së produkteve." });
     }
   } else {
-    res.status(405).json({ message: "The request method is not supported." });
+    res.status(405).json({ message: "Metoda e kërkesës nuk është e mbështetur." });
   }
 }
