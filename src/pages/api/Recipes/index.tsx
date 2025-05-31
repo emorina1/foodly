@@ -16,6 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const recipes = await getRecipes();
       res.status(200).json(recipes);
     } catch (error) {
+      console.error("❌ Error GET /api/recipes:", error);
       res.status(500).json({ message: "Gabim gjatë marrjes së recetave." });
     }
   } else {

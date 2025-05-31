@@ -9,6 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const recipe = await getRecipe(id as string);
       res.status(200).json(recipe);
     } catch (error) {
+      console.error("❌ Error GET /api/recipes/[id]:", error);
       res.status(500).json({ message: "Gabim gjatë marrjes së recetës." });
     }
   } else if (req.method === "PUT") {
@@ -17,6 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const result = await updateRecipe(id as string, newRecipe);
       res.status(200).json(result);
     } catch (error) {
+      console.error("❌ Error PUT /api/recipes/[id]:", error);
       res.status(500).json({ message: "Gabim gjatë përditësimit të recetës." });
     }
   } else if (req.method === "DELETE") {
@@ -24,6 +26,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const result = await deleteRecipes(id as string);
       res.status(200).json(result);
     } catch (error) {
+      console.error("❌ Error DELETE /api/recipes/[id]:", error);
       res.status(500).json({ message: "Gabim gjatë fshirjes së recetës." });
     }
   } else {
