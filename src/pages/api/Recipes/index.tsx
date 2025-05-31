@@ -2,24 +2,21 @@ import { createRecipe, getRecipes } from "@/api/services/Recipe";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === "POST") {
-    try {
+  try {
+    if (req.method === "GET") {
+      const recipes = await getRecipes();
+      res.status(200).json(recipes);
+
+    } else if (req.method === "POST") {
       const newRecipe = req.body;
       const result = await createRecipe(newRecipe);
       res.status(201).json(result);
-    } catch (error) {
-      console.error("❌ Error POST /api/recipes:", error);
-      res.status(500).json({ message: "Gabim gjatë krijimit të recetës." });
+
+    } else {
+      res.status(405).json({ message: "Metoda e kërkesës nuk është e mbështetur." });
     }
-  } else if (req.method === "GET") {
-    try {
-      const recipes = await getRecipes();
-      res.status(200).json(recipes);
-    } catch (error) {
-      console.error("❌ Error GET /api/recipes:", error);
-      res.status(500).json({ message: "Gabim gjatë marrjes së recetave." });
-    }
-  } else {
-    res.status(405).json({ message: "Metoda e kërkesës nuk mbështetet." });
+  } catch (error) {
+    console.error("❌ Error në /api/recipes:", error);
+    res.status(500).json({ message: "Gabim serveri gjatë përpunimit të recetave." });
   }
 }
