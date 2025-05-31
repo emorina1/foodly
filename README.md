@@ -56,12 +56,12 @@ To run the test suite:
 >npm test 
 
 Linku i applikacionit:
-http://localhost:3000/
+https://foodly-elsas-projects-0f9e8f30.vercel.app/
 
 Screenshots
 ![App Screenshot](./screenshots/preview.png)
 
 Dea Mani (Full Stack Developer, Project Manager, Database Administrator (DBA))
 Elsa Morina (Full Stack Developer, Project Manager)
-Adi Berisha (Backend Developer)
+Adi Berisha ( Developer)
 
