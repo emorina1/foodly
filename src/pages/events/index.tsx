@@ -1,9 +1,6 @@
-import { CircularProgress } from "@mui/material";
 import useFetch from "hooks/useFetch";
-import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import Head from "next/head";
 
 export interface Post {
@@ -52,9 +49,10 @@ export default function Events() {
                     🎂 Join us for the sweetest event of the season! Indulge in
                     handcrafted cupcakes, explore our brand-new raspberry
                     delights, and enjoy exclusive treats available only during
-                    the event. Bring your friends and family — there's
+                    the event. Bring your friends and family — there&#39;s
                     frosting, fun, and flavor for everyone! 💖✨
                   </p>
+
                   <div className="flex justify-center gap-4 mb-6">
                     <img
                       src="/uploads/kjut.jpg"
@@ -146,7 +144,7 @@ export default function Events() {
                   whileTap={{ scale: 0.98 }}
                 >
                   <h2 className="text-3xl font-bold text-pink-700 mb-4 uppercase">
-                    Unwrap Today’s Deals 🎁
+                    Unwrap Today&#39;s Deals 🎁
                   </h2>
                   <p className="text-gray-600 mb-6 text-lg leading-relaxed">
                     🍰 Every visit brings a sweet new surprise. Ready to taste

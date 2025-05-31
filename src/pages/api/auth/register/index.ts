@@ -20,18 +20,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-   const newUser: User = {
-  name,
-  email,
-  password: hashedPassword,
-  role: "user",
-  createdAt: new Date(),
-};
+    const newUser: User = {
+      name,
+      email,
+      password: hashedPassword,
+      role: "user",
+      createdAt: new Date(),
+    };
 
-const result = await createUser(newUser);
+    const result = await createUser(newUser);
 
     res.status(201).json({ message: "Përdoruesi u regjistrua me sukses", userId: result.insertedId });
   } catch (error) {
+    console.error("❌ Error POST /api/auth/register:", error);
     res.status(500).json({ error: "Gabim gjatë regjistrimit" });
   }
 }

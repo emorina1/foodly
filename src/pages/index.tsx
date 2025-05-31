@@ -72,23 +72,31 @@ export default function Home() {
       {/* Services Intro */}
       <motion.section
         className="text-center py-20 px-4"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
+        initial="hidden"
+        whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
+        variants={listVariants}
       >
-        <h2 className="text-4xl font-extrabold text-pink-600 mb-6">Our Service</h2>
+        <motion.h2
+          className="text-4xl font-extrabold text-pink-600 mb-6"
+          variants={itemVariants}
+        >
+          Our Service
+        </motion.h2>
       </motion.section>
 
       {/* Service 1 - Cake */}
       <motion.section
         className="flex flex-col md:flex-row items-center justify-between px-16 py-12 bg-pink-50"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
+        initial="hidden"
+        whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
+        variants={listVariants}
       >
-        <div className="md:w-1/2 flex justify-center">
+        <motion.div
+          className="md:w-1/2 flex justify-center"
+          variants={itemVariants}
+        >
           <Image
             src={cake}
             alt="Cake"
@@ -96,8 +104,11 @@ export default function Home() {
             height={400}
             className="rounded-3xl shadow-xl"
           />
-        </div>
-        <div className="md:w-1/2 mt-8 md:mt-0 md:pl-10">
+        </motion.div>
+        <motion.div
+          className="md:w-1/2 mt-8 md:mt-0 md:pl-10"
+          variants={itemVariants}
+        >
           <h3 className="text-5xl font-bold text-gray-800 mb-4">Cake</h3>
           <p className="text-gray-600 text-lg md:text-xl mb-6 leading-relaxed">
             Discover the art of cake-making with our stunning and delicious creations.
@@ -109,18 +120,21 @@ export default function Home() {
               Check it out
             </button>
           </Link>
-        </div>
+        </motion.div>
       </motion.section>
 
       {/* Service 2 - Cupcakes */}
       <motion.section
         className="flex flex-col md:flex-row-reverse items-center justify-between px-10 md:px-16 py-12 bg-white"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
+        initial="hidden"
+        whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
+        variants={listVariants}
       >
-        <div className="md:w-1/2 flex justify-center">
+        <motion.div
+          className="md:w-1/2 flex justify-center"
+          variants={itemVariants}
+        >
           <Image
             src={cupcake}
             alt="Cupcakes"
@@ -128,8 +142,11 @@ export default function Home() {
             height={400}
             className="rounded-3xl shadow-xl"
           />
-        </div>
-        <div className="md:w-1/2 mt-8 md:mt-0 md:pr-4 md:pl-0 text-right">
+        </motion.div>
+        <motion.div
+          className="md:w-1/2 mt-8 md:mt-0 md:pr-4 md:pl-0 text-right"
+          variants={itemVariants}
+        >
           <h3 className="text-5xl font-bold text-gray-800 mb-4">Cupcakes</h3>
           <p className="text-gray-600 text-lg md:text-xl mb-6 leading-relaxed">
             Indulge in the irresistible charm of our freshly baked cupcakes,
@@ -143,7 +160,7 @@ export default function Home() {
               Check it out
             </button>
           </Link>
-        </div>
+        </motion.div>
       </motion.section>
     </div>
   );

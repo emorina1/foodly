@@ -1,19 +1,21 @@
-import NextAuth from "next-auth";
+// D:\foodly\src\types\next-auth.d.ts
+
+import "next-auth"; // Ky import është vetëm për tipat, nuk sjell kod në runtime
 
 declare module "next-auth" {
   interface Session {
     user: {
-      name?: string | null;
-      email?: string | null;
-      image?: string | null;
-      role?: string; // ✅ Add this line
-    };
+      role?: string | null;
+    } & DefaultSession["user"];
   }
 
   interface User {
-    name: string;
-    email: string;
-    password: string;
-    role: "admin" | "user";
+    role?: string | null;
+  }
+}
+
+declare module "next-auth/jwt" {
+  interface JWT {
+    role?: string | null;
   }
 }

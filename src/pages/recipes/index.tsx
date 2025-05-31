@@ -6,9 +6,25 @@ import useFetch from "hooks/useFetch";
 import { Recipe } from "@/api/models/Recipe";
 import recetaImage from "@/assets/images/po.jpg";
 import { useSession } from "next-auth/react";
+import { Session } from "next-auth";
+import Image from "next/image"; // Import Image
+
+// Defino tipin e user me fushën role
+interface UserWithRole {
+  name?: string | null;
+  email?: string | null;
+  image?: string | null;
+  role?: string;
+}
+
+// Defino session me user të personalizuar
+interface SessionWithRole extends Session {
+  user: UserWithRole;
+}
 
 export default function Recipes() {
-  const { data: session } = useSession();
+  // Përdor useSession me tipin e përditësuar
+  const { data: session } = useSession() as { data: SessionWithRole | null };
   const isAdmin = session?.user?.role === "admin";
   const router = useRouter();
   const { data: recipesData, loading, remove } = useFetch<Recipe[]>("/api/recipes");
@@ -70,10 +86,13 @@ export default function Recipes() {
                 transition={{ duration: 0.4 }}
               >
                 {recipe.image && (
-                  <img
+                  <Image
                     src={recipe.image}
                     alt={recipe.title}
-                    className="w-full h-48 object-cover"
+                    width={400}  // Vendos përmasa (width)
+                    height={192} // Përmasa relative (p.sh 16:9 ratio)
+                    className="object-cover w-full"
+                    style={{ borderTopLeftRadius: '1rem', borderTopRightRadius: '1rem' }} // Për rounded corners në Image
                   />
                 )}
 

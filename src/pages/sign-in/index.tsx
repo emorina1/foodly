@@ -1,16 +1,22 @@
-import { getCsrfToken, signIn, getSession } from "next-auth/react";
+import { signIn, getSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 
-export default function SignIn({ csrfToken }: { csrfToken: string }) {
+interface UserWithRole {
+  name?: string | null;
+  email?: string | null;
+  image?: string | null;
+  role?: string;
+}
+
+export default function SignIn() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [darkMode, setDarkMode] = useState(false);
 
-  // ✅ On load: check saved theme
   useEffect(() => {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("theme");
@@ -45,7 +51,8 @@ export default function SignIn({ csrfToken }: { csrfToken: string }) {
       setError(res.error);
     } else if (res?.ok) {
       const session = await getSession();
-      const role = session?.user?.role;
+      const user = session?.user as UserWithRole;
+      const role = user?.role;
 
       if (role === "admin") {
         router.push("/dashboard/admin");
@@ -61,7 +68,6 @@ export default function SignIn({ csrfToken }: { csrfToken: string }) {
         <title>Sign In | My App</title>
       </Head>
 
-      {/* ☀️ / 🌙 Toggle Button */}
       <button
         onClick={toggleTheme}
         style={{
@@ -81,18 +87,15 @@ export default function SignIn({ csrfToken }: { csrfToken: string }) {
         {darkMode ? "☀️" : "🌙"}
       </button>
 
-      {/* Background color now controlled manually via className on <body> */}
       <div className="min-h-screen flex items-center justify-center pt-24 px-4 transition-colors">
         <div
           style={{
-            backgroundColor: darkMode ? "#1f2937" : "#ffffff", // gray-800 or white
+            backgroundColor: darkMode ? "#1f2937" : "#ffffff",
             color: darkMode ? "#ffffff" : "#000000",
           }}
           className="w-full max-w-md p-8 rounded-2xl shadow-lg border border-pink-300"
         >
-          <h2 className="text-3xl font-bold mb-6 text-center">
-            Welcome Back
-          </h2>
+          <h2 className="text-3xl font-bold mb-6 text-center">Welcome Back</h2>
 
           {error && (
             <div
@@ -152,9 +155,3 @@ export default function SignIn({ csrfToken }: { csrfToken: string }) {
     </>
   );
 }
-
-SignIn.getInitialProps = async (context: any) => {
-  return {
-    csrfToken: await getCsrfToken(context),
-  };
-};

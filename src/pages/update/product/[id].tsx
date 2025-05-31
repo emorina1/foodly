@@ -2,6 +2,7 @@ import { Product } from "@/api/models/Product";
 import useFetch from "hooks/useFetch";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 export default function UpdateProduct() {
   const router = useRouter();
@@ -120,11 +121,16 @@ export default function UpdateProduct() {
           </label>
 
           {newProduct.image && (
-            <img
-              src={newProduct.image}
-              alt="Preview"
-              className="rounded-xl w-full h-64 object-cover border border-pink-300"
-            />
+            <div className="relative rounded-xl w-full h-64 border border-pink-300 overflow-hidden">
+              <Image
+                src={newProduct.image}
+                alt="Preview"
+                fill
+                style={{ objectFit: "cover" }}
+                sizes="(max-width: 768px) 100vw, 50vw"
+                priority
+              />
+            </div>
           )}
         </div>
 

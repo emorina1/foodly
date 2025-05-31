@@ -1,6 +1,5 @@
 import { CircularProgress } from "@mui/material";
 import useFetch from "hooks/useFetch";
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Product } from "@/api/models/Product";
@@ -10,33 +9,17 @@ import { useSession } from "next-auth/react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export interface Post {
-  id: string;
-  title: string;
-  body: string;
-}
-
 export default function Products() {
   const { data: session } = useSession();
   const isAdmin = session?.user?.role === "admin";
 
-  const { data: initialPosts, loading } = useFetch<Post[]>(
-    "https://jsonplaceholder.typicode.com/posts"
-  );
-  const [posts, setPosts] = useState<Post[] | null>(null);
-
-  useEffect(() => {
-    if (initialPosts) {
-      setPosts(initialPosts);
-    }
-  }, [initialPosts]);
-
-  const router = useRouter();
   const {
     data: productsData,
     loading: productsLoading,
     remove,
   } = useFetch<Product[]>("/api/products");
+
+  const router = useRouter();
 
   const handleDeleteProduct = async (id: string) => {
     const confirmed = confirm("Are you sure you want to delete this product?");
@@ -159,7 +142,6 @@ export default function Products() {
         )}
       </div>
 
-      {/* ✅ Toast container goes at the bottom of your layout */}
       <ToastContainer position="top-center" autoClose={3000} theme="colored" />
     </div>
   );

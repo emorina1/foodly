@@ -1,18 +1,28 @@
-// pages/products/ssr/[id].tsx
-// dummy change to force rebuild
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
+import Image from "next/image";  // importo Image
+
+interface Post {
+  userId: number;
+  id: number;
+  title: string;
+  body: string;
+}
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const res = await fetch(
     `https://jsonplaceholder.typicode.com/posts/${params?.id}`
   );
-  const post = await res.json();
+  const post: Post = await res.json();
   return { props: { post } };
 };
 
-export default function Product({ post }: any) {
+interface ProductProps {
+  post: Post;
+}
+
+export default function Product({ post }: ProductProps) {
   return (
     <>
       <Head>
@@ -30,16 +40,23 @@ export default function Product({ post }: any) {
             pink magic. 💖 Come for the reveal, stay for the flavor!
           </p>
 
-          <img
-            src="/uploads/pinkish.jpg"
-            alt="Strawberry Surprise Cake"
-            className="rounded-xl shadow-md max-h-96 object-cover mx-auto mb-6"
-          />
+          <div className="relative w-full max-w-xl h-96 mx-auto mb-6 rounded-xl overflow-hidden shadow-md">
+            <Image
+              src="/uploads/pinkish.jpg"
+              alt="Strawberry Surprise Cake"
+              fill
+              style={{ objectFit: "cover" }}
+              priority // për ngarkim më të shpejtë
+            />
+          </div>
 
           <h2 className="text-3xl font-bold text-pink-600 mb-4 uppercase">
             Contact us and be there!
           </h2>
-          <p className="text-gray-700 mb-6">We will be happy if u join us! Click the button, contact us and take your friends with your!</p>
+          <p className="text-gray-700 mb-6">
+            We will be happy if u join us! Click the button, contact us and take
+            your friends with your!
+          </p>
 
           <p className="text-sm text-gray-500 italic mb-6">
             Rendered on server for every request. Event ID: {post.id}
