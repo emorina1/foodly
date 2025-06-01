@@ -1,36 +1,39 @@
-import { deleteRecipes, getRecipe, updateRecipe } from "@/api/services/Recipe";
+import { getRecipe, updateRecipe, deleteRecipe } from "@/api/services/Recipe";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { id } = req.query;
+  const {
+    query: { id },
+    method,
+  } = req;
 
-  if (!id || typeof id !== "string") {
-    return res.status(400).json({ message: "ID e recetës nuk është e vlefshme." });
+  if (typeof id !== "string") {
+    return res.status(400).json({ message: "Invalid ID format" });
   }
 
   try {
-    switch (req.method) {
+    switch (method) {
       case "GET":
         const recipe = await getRecipe(id);
         if (!recipe) {
-          return res.status(404).json({ message: "Receta nuk u gjet." });
+          return res.status(404).json({ message: "Recipe not found" });
         }
         return res.status(200).json(recipe);
 
       case "PUT":
-        const updatedRecipe = req.body;
-        const updated = await updateRecipe(id, updatedRecipe);
-        return res.status(200).json(updated);
+        const updated = await updateRecipe(id, req.body);
+        return res.status(200).json({ message: "Recipe updated", result: updated });
 
       case "DELETE":
-        const deleted = await deleteRecipes(id);
-        return res.status(200).json(deleted);
+        const deleted = await deleteRecipe(id);
+        return res.status(200).json({ message: "Recipe deleted", result: deleted });
 
       default:
-        return res.status(405).json({ message: "Metoda e kërkesës nuk është e mbështetur." });
+        res.setHeader("Allow", ["GET", "PUT", "DELETE"]);
+        return res.status(405).end(`Method ${method} Not Allowed`);
     }
   } catch (error) {
-    console.error("❌ Error në /api/recipes/[id]:", error);
-    return res.status(500).json({ message: "Gabim serveri gjatë përpunimit të recetës." });
+    console.error("❌ API error:", error);
+    return res.status(500).json({ message: "Internal server error" });
   }
 }
