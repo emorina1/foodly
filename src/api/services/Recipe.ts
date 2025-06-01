@@ -38,36 +38,22 @@ export async function getRecipes() {
 }
 
 export async function getRecipe(id: string) {
-  try {
     const client = await clientPromise;
     const db = client.db("myapp");
-
     const recipe = await db.collection("recipes").findOne({ _id: new ObjectId(id) });
     return recipe;
-  } catch (error) {
-    console.error("❌ Error in getRecipe():", error);
-    throw error;
-  }
-}
+  } 
 
 export async function updateRecipe(id: string, data: Recipe) {
-  try {
     const client = await clientPromise;
     const db = client.db("myapp");
-
     const result = await db
       .collection("recipes")
       .updateOne({ _id: new ObjectId(id) }, { $set: data });
-
     return result;
-  } catch (error) {
-    console.error("❌ Error in updateRecipe():", error);
-    throw error;
-  }
-}
-
+  } 
+    
 export async function deleteRecipe(id: string) {
-  try {
     const client = await clientPromise;
     const db = client.db("myapp");
 
@@ -76,8 +62,15 @@ export async function deleteRecipe(id: string) {
       .deleteOne({ _id: new ObjectId(id) });
 
     return result;
+  } 
+export async function getTotalRecipes() {
+  try {
+    const client = await clientPromise;
+    const db = client.db("myapp");
+    const count = await db.collection("recipes").countDocuments();
+    return count;
   } catch (error) {
-    console.error("❌ Error in deleteRecipe():", error);
+    console.error("❌ Error in getTotalRecipes():", error);
     throw error;
   }
 }
